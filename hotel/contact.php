@@ -18,12 +18,12 @@
 	<li><a href="reservation.php">Reservation</a></li>
 	<li><a href="contact.php">Contact</a></li>
 	</ul>
-	<div id="reserveCard">
-	<h1>Reserve your experience now</h1>
+	<div id="contactCard">
+	<h1>Do you have any questions? Feel free to contact us now</h1>
 	</div>
-		<div id="reserveBox">
-		<p>Ready to book your experience at Hotel Armitage? Feel free to put your details in the form. If you have any
-		questions regarding your reservation, please refer to our contact page.
+		<div id="contactBox">
+		<p>Do you have any questions regarding the serives here at Hotel Armitage? Feel free to use our contact form
+		below. Please provide your name, email, and phone number so we can contact you as soon as possible. Thank You</p>
 		</div>
 		<!-- php file for the footer -->
     </body>
