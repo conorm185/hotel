@@ -1,0 +1,110 @@
+
+CREATE TABLE `2050hotel`.`Hotels` (
+ `HotelID` INT(20) NOT NULL AUTO_INCREMENT ,
+ `name` VARCHAR(255) NOT NULL ,
+ `rating` DECIMAL(5,2) NOT NULL ,
+ `state` VARCHAR(255) NOT NULL ,
+ `city` VARCHAR(255) NOT NULL ,
+ `address` VARCHAR(255) NOT NULL ,
+ `zip` VARCHAR(255) NOT NULL ,
+ PRIMARY KEY (`HotelID`)) ENGINE = InnoDB;
+
+
+CREATE TABLE `2050hotel`.`roomtype` (
+ `typeID` INT(20) NOT NULL AUTO_INCREMENT ,
+ `name` VARCHAR(255) NOT NULL ,
+ `rate` DECIMAL(10,2) NOT NULL ,
+ `description` VARCHAR(255) NOT NULL ,
+ PRIMARY KEY (`typeID`)) ENGINE = InnoDB;
+
+
+CREATE TABLE `2050hotel`.`rooms` (
+ `roomID` INT(20) NOT NULL AUTO_INCREMENT ,
+ `hotelID` INT(20) NOT NULL ,
+ `typeID` INT(20) NOT NULL ,
+ `num` INT(20) NOT NULL ,
+ `interiorpath` VARCHAR(255) NOT NULL ,
+ `exteriorpath` VARCHAR(255) NOT NULL ,
+ PRIMARY KEY (`roomID`)) ENGINE = InnoDB;
+
+
+CREATE TABLE `2050hotel`.`customers` (
+ `customerID` INT(20) NOT NULL AUTO_INCREMENT ,
+ `name` VARCHAR(255) NOT NULL ,
+ `address` VARCHAR(255) NOT NULL ,
+ `email` VARCHAR(255) NOT NULL ,
+ `pswd` VARCHAR(255) NOT NULL ,
+ `salt` VARCHAR(255) NOT NULL ,
+ PRIMARY KEY (`customerID`)) ENGINE = InnoDB;
+
+
+CREATE TABLE `2050hotel`.`review` (
+ `reviewID` INT(20) NOT NULL AUTO_INCREMENT ,
+ `customerID` INT(20) NOT NULL ,
+ `hotelID` INT(20) NOT NULL ,
+ `date` DATE NOT NULL ,
+ `rating` INT(2) NOT NULL ,
+ `comment` VARCHAR(255) NOT NULL ,
+ PRIMARY KEY (`reviewID`)) ENGINE = InnoDB;
+
+
+CREATE TABLE `2050hotel`.`reservations` (
+ `resID` INT(20) NOT NULL AUTO_INCREMENT ,
+ `roomID` INT(20) NOT NULL ,
+ `customerID` INT(20) NOT NULL ,
+ `hotelID` INT(20) NOT NULL ,
+ `start` DATE NOT NULL ,
+ `end` DATE NOT NULL ,
+ `length` INT(5) NOT NULL ,
+ PRIMARY KEY (`resID`)) ENGINE = InnoDB;
+
+
+
+ALTER TABLE `reservations` ADD FOREIGN KEY (`customerID`)
+ REFERENCES `customers`(`customerID`)
+ ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `reservations` ADD FOREIGN KEY (`roomID`)
+ REFERENCES `rooms`(`roomID`)
+ ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `reservations` ADD FOREIGN KEY (`hotelID`)
+ REFERENCES `hotels`(`HotelID`)
+ ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `review` ADD FOREIGN KEY (`customerID`)
+ REFERENCES `customers`(`customerID`)
+ ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `review` ADD FOREIGN KEY (`hotelID`)
+ REFERENCES `hotels`(`HotelID`)
+ ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `rooms` ADD FOREIGN KEY (`hotelID`)
+ REFERENCES `hotels`(`HotelID`)
+ ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `rooms` ADD FOREIGN KEY (`typeID`)
+ REFERENCES `roomtype`(`typeID`)
+ ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+
+INSERT INTO `hotels`(`HotelID`, `name`, `rating`, `state`, `city`, `address`, `zip`)
+ VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7])
+
+INSERT INTO `customers`(`customerID`, `name`, `address`, `email`, `pswd`, `salt`)
+ VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6])
+
+INSERT INTO `reservations`(`resID`, `roomID`, `customerID`, `hotelID`, `start`, `end`, `length`)
+ VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7])
+
+INSERT INTO `review`(`reviewID`, `customerID`, `hotelID`, `date`, `rating`, `comment`)
+ VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6])
+
+INSERT INTO `rooms`(`roomID`, `hotelID`, `typeID`, `num`, `interiorpath`, `exteriorpath`)
+ VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6])
+
+INSERT INTO `roomtype`(`typeID`, `name`, `rate`, `description`)
+ VALUES ([value-1],[value-2],[value-3],[value-4])
+

@@ -1,22 +1,23 @@
 Hotels----------------------------------------------------------------------
-hotelID		int(20)			NOT NULL		PK
+hotelID		int(20)			NOT NULL		PK	AI
 name		varchar(255)		NOT NULL			
 rating		decimal(10,2)		NOT NULL		
 state		varchar(255)		NOT NULL			
 city		varchar(255)		NOT NULL			
-address		varchar(255)		NOT NULL			
+address		varchar(255)		NOT NULL
+zip		varchar(255)		NOT NULL			
 
 Rooms-----------------------------------------------------------------------
 roomID		int(20)			NOT NULL		PK
 hotelID		int(20)			NOT NULL		FK
 typeID		int(20)			NOT NULL		FK
 num		int(20)			NOT NULL
-**interior image path
-**exterior view image path			
+interiorpath
+exteriorpath			
 
 RoomTypes------------------------------------------------------------------
 typeID		int(20)			NOT NULL		PK
-rate		decimal(5,2)		NOT NULL
+rate		decimal(10,2)		NOT NULL
 *name		varchar(255)		NOT NULL
 *foldout		
 desc		varchar(255)		NOT NULL			
