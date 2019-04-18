@@ -1,0 +1,122 @@
+Hotels----------------------------------------------------------------------
+hotelID		int(20)			NOT NULL		PK
+name		varchar(255)		NOT NULL			
+rating		decimal(10,2)		NOT NULL		
+state		varchar(255)		NOT NULL			
+city		varchar(255)		NOT NULL			
+address		varchar(255)		NOT NULL			
+
+Rooms-----------------------------------------------------------------------
+roomID		int(20)			NOT NULL		PK
+hotelID		int(20)			NOT NULL		FK
+typeID		int(20)			NOT NULL		FK
+num		int(20)			NOT NULL
+**interior image path
+**exterior view image path			
+
+RoomTypes------------------------------------------------------------------
+typeID		int(20)			NOT NULL		PK
+rate		decimal(5,2)		NOT NULL
+*name		varchar(255)		NOT NULL
+*foldout		
+desc		varchar(255)		NOT NULL			
+
+Reservations----------------------------------------------------------------
+resID		int(20)			NOT NULL		PK	AI
+roomID		int(20)			NOT NULL		FK
+customerID	int(20)			NOT NULL		FK
+*hotelID	int(20)			NOT NULL		FK
+start		date()			NOT NULL		
+end		date()			NOT NULL		
+*length		int(10)			NOT NULL		
+
+OLD RESERVATIONS------------------------------------------------------------
+
+Customers-------------------------------------------------------------------
+customerID	int(20)			NOT NULL		PK	AI	
+name		varchar(255)		NOT NULL			
+address		varchar(255)		NOT NULL			
+email		varchar(255)		NOT NULL		UNIQUE	
+psw		varchar(255)		NOT NULL			
+salt		varchar(255)		NOT NULL			
+
+Reviews---------------------------------------------------------------------
+reviewID	int(20)			NOT NULL		PK	AI	
+customerID	int(20)			NOT NULL			
+hotelID		int(20)			NOT NULL			
+date		date()			NOT NULL		UNIQUE	
+rating		int(2)			NOT NULL			
+comment		varchar(255)		NOT NULL			
+
+
+
+////////////////////////////common queries/////////////////////////////////////
+
+MAKE A RESERVATION-----------------------------------------------------------
+choose at $location
+choose a $start and $end date
+query all rooms at $location with no reservations between the start and end
+
+SELECT	*
+FROM ROOMS
+WHERE hotelID=$location
+AND
+	(sub query: rid where there are no existing reservations)
+
+then
+
+INSERT INTO RESERVATIONS(roomID, customerID, hotelID, start, end, length)
+VALUES(roomID, customerID, hotelID, start, end, length)
+
+FIND THE COST OF A RESERVATION------------------------------------------------
+
+SELECT Rooms.rate, Reservations.length
+FROM Reservations
+INNER JOIN Rooms ON Reservations.roomID = Room.roomID;
+
+FIND CUSTOMER ORDER HISTORY---------------------------------------------------
+
+SELECT	*
+FROM RESERVATIONS
+WHERE customerID=$_SESSION['cid']
+
+CREATE NEW CUSTOMER ACCOUNT---------------------------------------------------
+
+INSERT INTO Customers()
+VALUES()	
+
+CREATE NEW REVIEW ------------------------------------------------------------
+
+INSERT INTO Reviews()
+VALUES()
+
+
+
+////////////////////////////////////////questions////////////////////////////////////////
+ 
+1.	migrating 'old' reservations to a seperate table
+
+2.	how to use DATEDIFF with two fields from the same table
+
+3.	implementing restrictions and cascades
+
+4.	calculate hotel rating from existing reviews
+
+
+
+
+
+
+////////////////////////////////////////todo////////////////////////////////////////
+
+order of creating DB data
+
+create 50 hotels, one in the capital of each state
+create 8 room types (double, queen, king, pair, pent, honeymoon)
+use 50 customers from sample table
+create 150 reviews. 3 for each location
+
+create 20 rooms for each hotel
+create a bunch of existing reservations
+
+
