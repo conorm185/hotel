@@ -108,3 +108,6 @@ INSERT INTO `rooms`(`roomID`, `hotelID`, `typeID`, `num`, `interiorpath`, `exter
 INSERT INTO `roomtype`(`typeID`, `name`, `rate`, `description`)
  VALUES ([value-1],[value-2],[value-3],[value-4])
 
+
+INSERT INTO `hotels`(`name`, `state`, `city`, `address`, `zip`)
+ VALUES (),
