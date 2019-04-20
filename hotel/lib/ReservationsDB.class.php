@@ -3,13 +3,13 @@
    Handles database access for the Artist table.
 
  */
-class ArtistDB
+class ReservationsDB
 {
 
     private $pdo = null;
 
-    private static $baseSQL = "SELECT * FROM Hotels";
-    private static $constraint = ' order by HotelID';
+    private static $baseSQL = "SELECT * FROM Reservations";
+    private static $constraint = ' order by resID';
 
     public function __construct($connection) {
         $this->pdo = $connection;
@@ -17,7 +17,7 @@ class ArtistDB
 
     public function findById($id)
     {
-        $sql = self::$baseSQL .  ' WHERE HotelID=? ';
+        $sql = self::$baseSQL .  ' WHERE resID=? ';
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($id));
         return $statement->fetch();
 

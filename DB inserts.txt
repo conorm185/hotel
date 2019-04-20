@@ -339,3 +339,40 @@ END;
 //  
 CALL calculateRating();
 
+
+
+
+
+
+
+
+
+
+SELECT * 
+FROM `rooms` 
+WHERE hotelID=1
+AND typeID=1
+AND NOT EXISTS(SELECT *
+    			FROM reservations
+                WHERE  t.startDate BETWEEN @randomDay AND @endDay OR
+						@randomDay BETWEEN t.startDate AND t.endDate);
+
+$sql
+
+SELECT * 
+FROM Rooms 
+WHERE hotelID=? 
+AND typeID=? 
+AND NOT EXISTS( SELECT * 
+		FROM reservations 
+		WHERE Rooms.roomID = reservations.roomID 
+			AND startDate BETWEEN ? AND ? 
+			OR ? BETWEEN startDate AND endDate ) order by RoomID LIMIT 20
+
+
+
+
+SELECT * 
+FROM `reservations` 
+INNER JOIN rooms on reservations.roomID=rooms.roomID
+Where hotelID=1;

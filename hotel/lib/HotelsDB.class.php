@@ -1,15 +1,12 @@
 <?php
-/*
-   Handles database access for the Artist table.
 
- */
-class ArtistDB
+class HotelsDB
 {
 
     private $pdo = null;
 
-    private static $baseSQL = "SELECT * FROM Rooms";
-    private static $constraint = ' order by RoomID';
+    private static $baseSQL = "SELECT * FROM Hotels";
+    private static $constraint = ' order by HotelID';
 
     public function __construct($connection) {
         $this->pdo = $connection;
@@ -17,7 +14,7 @@ class ArtistDB
 
     public function findById($id)
     {
-        $sql = self::$baseSQL .  ' WHERE RoomID=? ';
+        $sql = self::$baseSQL .  ' WHERE HotelID=? ';
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($id));
         return $statement->fetch();
 
