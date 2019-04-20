@@ -175,17 +175,6 @@ VALUES (FLOOR(RAND()*(54-1+1)+1),FLOOR(RAND()*(81-1+1)+1),FLOOR(RAND()*(10-1+1)+
 
 
 
-UPDATE reviev
-SET your_date_field = dateadd(day, (abs(CHECKSUM(newid())) % 3650) * -1, getdate())
-WHERE reviewID>0;
-
-
-
-
-
-
-
-
 
 
 
@@ -370,39 +359,41 @@ INSERT INTO `hotels`(`name`, `address`, `city`, `state`, `zip`)
 	('Conrad New York','102 North End Ave','New York','NY','10282');
 
 
-drop procedure if exists doWhile;
+drop procedure if exists doWhile2;
 DELIMITER //  
-CREATE PROCEDURE doWhile()   
+CREATE PROCEDURE doWhile2()   
 BEGIN
 DECLARE i INT DEFAULT 1; 
-WHILE (i <= 10000) DO
-	DECLARE randomDay date = DATE_ADD("2009-04-19", INTERVAL FLOOR(RAND()*(3740-1+1)+1) DAY);
-	DECLARE randomLength int = FLOOR(RAND()*(14-1+1)+1);
-	DECLARE endDay date = DATE_ADD(randomDay, INTERVAL randomLength DAY);
-	DECLARE randomRoomID int = FLOOR(RAND()*(4883-1+1)+1);
-    	DECLARE randomCustomerID int = FLOOR(RAND()*(54-1+1)+1);
+DECLARE randomDay date DEFAULT "2009-04-19";
+DECLARE randomLength int DEFAULT 1;
+DECLARE endDay date DEFAULT "2009-04-19";
+DECLARE randomRoomID int DEFAULT 1;
+DECLARE randomCustomerID int DEFAULT 1;
+WHILE (i <= 100000) DO
+	set @randomDay = DATE_ADD("2009-04-19", INTERVAL FLOOR(RAND()*(3740-1+1)+1) DAY);
+	set @randomLength = FLOOR(RAND()*(14-1+1)+1);
+	set @endDay = DATE_ADD(@randomDay, INTERVAL @randomLength DAY);
+	set @randomRoomID = FLOOR(RAND()*(4883-1+1)+1);
+    set @randomCustomerID = FLOOR(RAND()*(50-1+1)+1);
     
-    
-	IF ((
-	SELECT * 
-	FROM 'reservations' 
-	WHERE
-		'reservations'.'roomID'=randomRoomID AND
-		'start' BETWEEN randomDay AND endDay OR
-		randomDay BETWEEN 'start' AND 'end') IS NULL),
-
-
-
-    	(INSERT INTO `reservations`(`roomID`, `customerID`,`start`, `end`, `length`)
-	 		VALUES (randomRoomID,randomCustomerID,randomDay,endDay,randomLength)),);
- 
- 
+    IF  (EXISTS(SELECT * FROM (
+    					SELECT *
+    					FROM reservations
+					    WHERE roomID = @randomRoomID
+					) AS t
+                WHERE  t.startDate BETWEEN @randomDay AND @endDay OR
+		@randomDay BETWEEN t.startDate AND t.endDate)) THEN
+	  set @randomRoomID = FLOOR(RAND()*(4883-1+1)+1);
+	ELSE
+	  INSERT INTO `reservations`(`roomID`, `customerID`,`startDate`, `endDate`, `length`)
+	 		VALUES (@randomRoomID,@randomCustomerID,@randomDay,@endDay,@randomLength);
+	END IF;
+            
     SET i = i+1;
 END WHILE;
 END;
 //  
 
-CALL doWhile();
 
 
 
@@ -412,26 +403,42 @@ CALL doWhile();
 
 
 
-sample
 
-DELIMITER $$
- 
-CREATE PROCEDURE GetCustomerLevel(
-    in  p_customerNumber int(11), 
-    out p_customerLevel  varchar(10))
+
+
+drop procedure if exists doWhile2;
+DELIMITER //  
+CREATE PROCEDURE doWhile2()   
 BEGIN
-    DECLARE creditlim double;
- 
-    SELECT creditlimit INTO creditlim
-    FROM customers
-    WHERE customerNumber = p_customerNumber;
- 
-    IF creditlim > 50000 THEN
- SET p_customerLevel = 'PLATINUM';
-    ELSEIF (creditlim <= 50000 AND creditlim >= 10000) THEN
-        SET p_customerLevel = 'GOLD';
-    ELSEIF creditlim < 10000 THEN
-        SET p_customerLevel = 'SILVER';
-    END IF;
- 
-END$$
+DECLARE i INT DEFAULT 1; 
+DECLARE randomDay date DEFAULT "2009-04-19";
+DECLARE randomLength int DEFAULT 1;
+DECLARE endDay date DEFAULT "2009-04-19";
+DECLARE randomRoomID int DEFAULT 1;
+DECLARE randomCustomerID int DEFAULT 1;
+WHILE (i <= 100000) DO
+	set @randomDay = DATE_ADD("2009-04-19", INTERVAL FLOOR(RAND()*(3740-1+1)+1) DAY);
+	set @randomLength = FLOOR(RAND()*(14-1+1)+1);
+	set @endDay = DATE_ADD(@randomDay, INTERVAL @randomLength DAY);
+	set @randomRoomID = FLOOR(RAND()*(4883-1+1)+1);
+    set @randomCustomerID = FLOOR(RAND()*(50-1+1)+1);
+    
+    IF  (EXISTS(SELECT * FROM (
+    					SELECT *
+    					FROM reservations
+					    WHERE roomID = @randomRoomID
+					) AS t
+                WHERE  t.startDate BETWEEN @randomDay AND @endDay OR
+		@randomDay BETWEEN t.startDate AND t.endDate)) THEN
+	  set @randomRoomID = FLOOR(RAND()*(4883-1+1)+1);
+	ELSE
+	  INSERT INTO `reservations`(`roomID`, `customerID`,`startDate`, `endDate`, `length`)
+	 		VALUES (@randomRoomID,@randomCustomerID,@randomDay,@endDay,@randomLength);
+	END IF;
+            
+    SET i = i+1;
+END WHILE;
+END;
+//  
+
+CALL doWhile2();
