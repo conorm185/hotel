@@ -90,24 +90,348 @@ ALTER TABLE `rooms` ADD FOREIGN KEY (`typeID`)
 
 
 
-INSERT INTO `hotels`(`HotelID`, `name`, `rating`, `state`, `city`, `address`, `zip`)
- VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7])
+INSERT INTO `roomtype`(`name`, `rate`, `beds`, `description`)
+ VALUES ('Single','110.25','1','Single: A room assigned to one person. May have one or more beds.'),
+	('Double','140.55','2','Double: A room assigned to two people. May have one or more beds.'),
+	('Triple','160.10','3','Triple: A room assigned to three people. May have two or more beds.'),
+	('Quad','180.99','4','Quad: A room assigned to four people. May have two or more beds.'),
+	('Queen','230.00','1','Queen: A room with a queen-sized bed. May be occupied by one or more people.'),
+	('King','250.00','1','King: A room with a king-sized bed. May be occupied by one or more people.'),
+	('Twin','145.55','2','Twin: A room with two beds. May be occupied by one or more people.'),
+	('Double-double','220.50','2','Double-double: A room with two double (or perhaps queen) beds. May be occupied by one or more people.'),
+	('Studio','100.25','1','Studio: A room with a studio bed – a couch that can be converted into a bed. May also have an additional bed.'),
+	('Master Suite','299.99','2','Master Suite: A parlour or living room connected to one or more bedrooms.'),
+	('Mini-Suite','280.11','1','Mini-Suite or Junior Suite: A single room with a bed and sitting area. Sometimes the sleeping area is in a bedroom separate from the parlour or living room.');
 
-INSERT INTO `customers`(`customerID`, `name`, `address`, `email`, `pswd`, `salt`)
- VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6])
 
-INSERT INTO `reservations`(`resID`, `roomID`, `customerID`, `hotelID`, `start`, `end`, `length`)
- VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7])
 
 INSERT INTO `review`(`reviewID`, `customerID`, `hotelID`, `date`, `rating`, `comment`)
  VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6])
 
-INSERT INTO `rooms`(`roomID`, `hotelID`, `typeID`, `num`, `interiorpath`, `exteriorpath`)
- VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6])
+INSERT INTO `rooms`(`hotelID`, `typeID`)
+ VALUES (FLOOR(RAND()*(81-1+1)+1),FLOOR(RAND()*(11-1+1)+1));
 
-INSERT INTO `roomtype`(`typeID`, `name`, `rate`, `description`)
- VALUES ([value-1],[value-2],[value-3],[value-4])
+drop procedure if exists doWhile;
+DELIMITER //  
+CREATE PROCEDURE doWhile()   
+BEGIN
+DECLARE i INT DEFAULT 1; 
+WHILE (i <= 4860) DO
+    INSERT INTO `rooms`(`hotelID`, `typeID`)
+ VALUES (FLOOR(RAND()*(81-1+1)+1),FLOOR(RAND()*(11-1+1)+1));
+    SET i = i+1;
+END WHILE;
+END;
+//  
+
+CALL doWhile(); 
 
 
-INSERT INTO `hotels`(`name`, `state`, `city`, `address`, `zip`)
- VALUES (),
+
+
+Generate a int between 1 and 10 = rating
+SELECT FLOOR(RAND()*(10-1+1)+1) 'Result 1';
+
+Generate a int between 1 and 54 = customerID
+SELECT FLOOR(RAND()*(54-1+1)+1) 'Result 1';
+
+Generate a int between 1 and 81 = hotelID
+SELECT FLOOR(RAND()*(81-1+1)+1) 'Result 1';
+
+Generate a int between 1 and 11 = typeID
+SELECT FLOOR(RAND()*(11-1+1)+1) 'Result 1';
+
+Generate a int between 1 and 3650 = day over the last 10 years
+SELECT FLOOR(RAND()*(3650-1+1)+1) 'Result 1';
+
+Generate a int between 1 and 14 = length
+SELECT FLOOR(RAND()*(14-1+1)+1) 'Result 1';
+
+Generate a int between 1 and 4883 = roomID
+SELECT FLOOR(RAND()*(4883-1+1)+1) 'Result 1';
+
+
+Generate a random date within the last 10 years
+UPDATE
+  review
+SET
+  date = DATE_ADD("2009-04-19", INTERVAL FLOOR(RAND()*(3650-1+1)+1) DAY);
+
+4883 rooms *(3650days + 90days) = 18,262,420 total reservable days possible
+18,262,420 * (.5 average hotel occupency) = 9,131,210 days target
+9,131,210 / (7 average length of visit) = 1,304,458 total reservations
+
+
+INSERT INTO `reservations`(`roomID`, `customerID`, `hotelID`, `start`, `end`, `length`)
+ VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7])
+
+
+
+
+
+INSERT INTO `review`(`customerID`, `hotelID`,`rating`)
+VALUES (FLOOR(RAND()*(54-1+1)+1),FLOOR(RAND()*(81-1+1)+1),FLOOR(RAND()*(10-1+1)+1));
+
+
+
+
+UPDATE reviev
+SET your_date_field = dateadd(day, (abs(CHECKSUM(newid())) % 3650) * -1, getdate())
+WHERE reviewID>0;
+
+
+
+
+
+
+
+
+
+
+
+constraints
+CHECK(no_page>0)
+
+
+
+SELECT * FROM tbl WHERE
+existing_start BETWEEN $newSTart AND $newEnd OR
+$newStart BETWEEN existing_start AND existing_end
+
+
+
+
+
+
+
+INSERT INTO `hotels`(`name`, `address`, `city`, `state`, `zip`)
+ VALUES 
+	('Sheraton Grand Seattle','1400 6th Ave','Seattle','WA','98101'),
+
+	('Great Wolf Lodge','20500 Old Hwy 99 SW','Grand Mound','WA','98531'),
+
+	('Oregon Garden Resort','895 W Main St','Silverton','OR','97381'),
+
+	('Running Y Ranch Resort','5500 Running Y Rd','Klamath Falls','OR','97601'),
+
+	('Beachfront Inn','16008 Boat Basin Rd','Brookings','OR','97415'),
+
+	('Best Western Country Inn','2025 Riverwalk Dr','Fortuna','CA','95540'),
+
+	('Palace Hotel, a Luxury Collection Hotel, San Francisco','2 New Montgomery St','San Francisco','CA','94105'),
+
+	('Monterey Plaza Hotel & Spa','400 Cannery Row','Monterey','CA','93940'),
+
+	('Peppermill Reno','2707 S Virginia St','Reno','NV','89502'),
+
+	('Chukchansi Gold Resort & Casino','711 Lucky Ln','Coarsegold','CA','93614'),
+
+	('Madonna Inn','100 Madonna Rd','San Luis Obispo','CA','93405'),
+
+	('Terranea Resort','100 Terranea Way','Rancho Palos Verdes','CA','90275'),
+
+	
+	('Tropicana Las Vegas','3801 S Las Vegas Blvd','Las Vegas','NV','89109'),
+
+	('Luxor Hotel & Casino','3900 S Las Vegas Blvd','Las Vegas','NV','89119'),
+
+	('Mandalay Bay','3950 S Las Vegas Blvd','Las Vegas','NV','89119'),
+
+	('The Cosmopolitan of Las Vegas','3708 S Las Vegas Blvd','Las Vegas','NV','89109'),
+
+	('Bellagio Hotel and Casino','3600 S Las Vegas Blvd','Las Vegas','NV','89109'),
+
+	('The Venetian','3355 S Las Vegas Blvd','Las Vegas','NV','89109'),
+
+	('Desert Rose Resort','5051 Duke Ellington Way','Las Vegas','NV','89119'),
+
+	('Hyatt Regency Phoenix','122 N 2nd St','Phoenix','AZ','85004'),
+
+	('Isleta Resort & Casino','11000 Broadway Southeast','Albuquerque','NM','87105'),
+
+	('Hyatt Regency Denver At Colorado Convention Center','650 15th St','Denver','CO','80202'),
+
+	('Little America Hotel & Resort - Cheyenne','2800 W Lincolnway','Cheyenne','WY','82009'),
+
+	('Northern Hotel','19 N Broadway','Billings','MT','59101'),
+
+	('Hawthorn Suites by Wyndham Dickinson','1170 Roughrider Blvd','Dickinson','ND','58601'),
+
+	('Home2 Suites by Hilton Fargo,ND','1652 44th St S','Fargo','ND','58103'),
+
+	('Holiday Inn Rapid City-Rushmore Plaza','505 N 5th St','Rapid City','SD','57701'),
+
+	('Ameristar Casino Hotel Council Bluffs','2200 River Rd','Council Bluffs','IA','51501'),
+
+	('Argosy Casino Hotel & Spa','777 Northwest Argosy Casino Parkway','Riverside','MO','64150'),
+
+	('Ambassador Hotel Wichita, Autograph Collection','104 S Broadway','Wichita','KS','67202'),
+
+	('Isleta Resort & Casino','11000 Broadway Southeast','Albuquerque','NM','87105'),
+
+	('The Skirvin Hilton','1 Park Ave','Oklahoma City','OK','73102'),
+
+	('Omni Fort Worth Hotel','1300 Houston St','Fort Worth','TX','76102'),
+
+	('JW Marriott San Antonio Hill Country Resort & Spa','23808 Resort Pkwy','San Antonio','TX','78261'),
+
+	('Emerald Beach Hotel','1102 S Shoreline Blvd','Corpus Christi','TX','78401'),
+
+	('Hilton Houston Post Oak by the Galleria','2001 Post Oak Blvd','Houston','TX','77056'),
+
+	('Hyatt Regency New Orleans','601 Loyola Ave','New Orleans','LA','70113'),
+
+	('The Peabody Memphis','118 S 2nd St','Memphis','TN','38103'),
+
+	('Wyndham Riverfront Little Rock','2 Riverfront Pl','North Little Rock','AR','72114'),
+
+	('Embassy Suites by Hilton Jackson North Ridgeland','200 Township Ave','Ridgeland','MS','39157'),
+
+	('Grand Bohemian Hotel Mountain Brook, Autograph Collection','2655 Lane Park Rd','Birmingham','AL','35223'),
+
+	('Renaissance Montgomery Hotel & Spa at the Convention Center','201 Tallapoosa St','Montgomery','AL','36104'),
+
+	('The Westin Peachtree Plaza, Atlanta','210 Peachtree St NW','Atlanta','GA','30303'),
+
+	('Best Western Plus Tallahassee North Hotel','2727 Graves Rd','Tallahassee','FL','32303'),
+
+	('Omni Jacksonville Hotel','245 Water St','Jacksonville','FL','32202'),
+
+	('Orlando World Center Marriott','8701 World Center Dr','Orlando','FL','32821'),
+
+	('The Ritz-Carlton, Naples','280 Vanderbilt Beach Rd','Naples','FL','34108'),
+
+	('1 Hotel South Beach','2341 Collins Ave','Miami Beach','FL','33139'),
+
+	('The Dewberry Charleston','334 Meeting St','Charleston','SC','29403'),
+
+	('Embassy Suites by Hilton Columbia Greystone','200 Stoneridge Dr','Columbia','SC','29210'),
+
+	('Breakers Myrtle Beach Resort','2006 North Ocean Boulevard','Myrtle Beach','SC','29577'),
+
+	('Gaylord Opryland Resort & Convention Center','2800 Opryland Dr','Nashville','TN','37214'),
+
+	('The Omni Grove Park Inn','290 Macon Ave','Asheville','NC','28804'),
+
+	('The Durham Hotel','315 E Chapel Hill St','Durham','NC','27701'),
+
+	('Comfort Inn On the Ocean','1601 S Virginia Dare Trail','Kill Devil Hills','NC','27948'),
+
+	('Hilton Norfolk The Main','100 E Main St','Norfolk','VA','23510'),
+
+	('Wedmore Place','5810 Wessex Hundred','Williamsburg','VA','23185'),
+
+	('Comfort Suites Southpark','931 South Ave','Colonial Heights','VA','23834'),
+
+	('The Jefferson Hotel','101 W Franklin St','Richmond','VA','23220'),
+
+	('The Galt House Hotel, A Trademark Collection Hotel by Wyndham','140 N Fourth St','Louisville','KY','40202'),
+
+	('Hyatt Regency St Louis At The Arch','315 Chestnut St','St. Louis','MO','63102'),
+
+	('LondonHouse Chicago, Curio Collection by Hilton','85 E Wacker Dr','Chicago','IL','60601'),
+
+	('DoubleTree by Hilton Hotel St Paul Downtown','411 Minnesota St','St Paul','MN','55101'),
+
+	('Holiday Inn & Suites Duluth-Downtown','200 W 1st St','Duluth','MN','55802'),
+
+	('Home2 Suites by Hilton Fargo, ND','1652 44th St S','Fargo','ND','58103'),
+
+	('The Iron Horse Hotel','500 W Florida St','Milwaukee','WI','53204'),
+
+	('Hilton Cleveland Downtown','100 Lakeside Ave E','Cleveland','OH','44114'),
+
+	('Hilton Columbus Downtown','401 N High St','Columbus','OH','43215'),
+
+	('Pittsburgh Marriott City Center','112 Washington Pl','Pittsburgh','PA','15219'),
+
+	('Hotel Covington','638 Madison Ave','Covington','KY','41011'),
+
+	('Hotel Sofitel Philadelphia at Rittenhouse Square','120 S 17th St','Philadelphia','PA','19103'),
+
+	('The Watergate Hotel','2650 Virginia Ave NW','Washington','DC','20037'),
+
+	('Dover Downs Hotel & Casino','1131 N Dupont Hwy','Dover','DE','19901'),
+
+	('Hampton Inn & Suites Buffalo Airport','133 Buell Ave','Cheektowaga','NY','14225'),
+
+	('Tru by Hilton Portland Airport Area','369 Maine Mall Rd','South Portland','ME','04106'),
+
+	('Best Western Concord Inn & Suites','97 Hall St','Concord','NH','03301'),
+
+	('The Westin Copley Place, Boston','10 Huntington Ave','Boston','MA','02116'),
+
+	('Graduate Providence','11 Dorrance St','Providence','RI','02903'),
+
+	('Holiday Inn Hartford Downtown Area','100 E River Dr','East Hartford','CT','06108'),
+
+	('Embassy Suites by Hilton Syracuse Destiny USA','311 Hiawatha Blvd W','Syracuse','NY','13204'),
+
+	('Conrad New York','102 North End Ave','New York','NY','10282');
+
+
+drop procedure if exists doWhile;
+DELIMITER //  
+CREATE PROCEDURE doWhile()   
+BEGIN
+DECLARE i INT DEFAULT 1; 
+WHILE (i <= 10000) DO
+	DECLARE randomDay date = DATE_ADD("2009-04-19", INTERVAL FLOOR(RAND()*(3740-1+1)+1) DAY);
+	DECLARE randomLength int = FLOOR(RAND()*(14-1+1)+1);
+	DECLARE endDay date = DATE_ADD(randomDay, INTERVAL randomLength DAY);
+	DECLARE randomRoomID int = FLOOR(RAND()*(4883-1+1)+1);
+    	DECLARE randomCustomerID int = FLOOR(RAND()*(54-1+1)+1);
+    
+    
+	IF ((
+	SELECT * 
+	FROM 'reservations' 
+	WHERE
+		'reservations'.'roomID'=randomRoomID AND
+		'start' BETWEEN randomDay AND endDay OR
+		randomDay BETWEEN 'start' AND 'end') IS NULL),
+
+
+
+    	(INSERT INTO `reservations`(`roomID`, `customerID`,`start`, `end`, `length`)
+	 		VALUES (randomRoomID,randomCustomerID,randomDay,endDay,randomLength)),);
+ 
+ 
+    SET i = i+1;
+END WHILE;
+END;
+//  
+
+CALL doWhile();
+
+
+
+
+
+
+
+
+
+sample
+
+DELIMITER $$
+ 
+CREATE PROCEDURE GetCustomerLevel(
+    in  p_customerNumber int(11), 
+    out p_customerLevel  varchar(10))
+BEGIN
+    DECLARE creditlim double;
+ 
+    SELECT creditlimit INTO creditlim
+    FROM customers
+    WHERE customerNumber = p_customerNumber;
+ 
+    IF creditlim > 50000 THEN
+ SET p_customerLevel = 'PLATINUM';
+    ELSEIF (creditlim <= 50000 AND creditlim >= 10000) THEN
+        SET p_customerLevel = 'GOLD';
+    ELSEIF creditlim < 10000 THEN
+        SET p_customerLevel = 'SILVER';
+    END IF;
+ 
+END$$
