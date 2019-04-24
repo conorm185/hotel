@@ -111,6 +111,68 @@ catch (PDOException $e) {
     <link href="css/semantic.css" rel="stylesheet" >
     <link href="css/icon.css" rel="stylesheet" >
     <link href="css/styles.css" rel="stylesheet">
+ 
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxssYVhHUvkzWVhzQyU39SPVzZfwWZZJU&callback=initMap"
+            type="text/javascript"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      
+      
+ 
+      
+    google.charts.load('current', {
+      'packages': ['map'],
+      'mapsApiKey': 'AIzaSyBxssYVhHUvkzWVhzQyU39SPVzZfwWZZJU'
+    });
+    google.charts.setOnLoadCallback(drawMap);
+
+    function drawMap () {
+        
+        var data = google.visualization.arrayToDataTable([
+          ['Lat', 'Long', 'Name']
+            
+           <?php   
+            while ($single = $hotels->fetch()) { 
+                echo ',[' . $single['latitude'] . ',' . $single['longitude'] . ',\'' . $single['name'] . '\']';
+            }
+            ?> 
+        ]);
+        
+        
+        
+      var options = {
+        mapType: 'styledMap',
+        zoomLevel: 4,
+        showTooltip: true,
+        showInfoWindow: true,
+        useMapTypeControl: true,
+        maps: {
+          // Your custom mapTypeId holding custom map styles.
+          styledMap: {
+            name: 'Styled Map', // This name will be displayed in the map type control.
+            styles: [
+              {featureType: 'poi.attraction',
+               stylers: [{color: '#fce8b2'}]
+              },
+              {featureType: 'road.highway',
+               stylers: [{hue: '#0277bd'}, {saturation: -50}]
+              },
+              {featureType: 'road.highway',
+               elementType: 'labels.icon',
+               stylers: [{hue: '#000'}, {saturation: 100}, {lightness: 50}]
+              },
+              {featureType: 'landscape',
+               stylers: [{hue: '#259b24'}, {saturation: 10}, {lightness: -22}]
+              }
+        ]}}
+      };
+
+      var map = new google.visualization.Map(document.getElementById('map_div'));
+
+      map.draw(data, options);
+    }
+    </script>
+    
 </head>
 <body >
     
@@ -118,20 +180,24 @@ catch (PDOException $e) {
     
 <main class="ui segment doubling stackable grid container">
     <section class="four wide column">
-        <?php include 'includes/browse-filters.inc.php'; ?>
+        <?php $hotels = $hotelsDB->getAll(); include 'includes/browse-filters.inc.php'; ?>
     </section>
     
     <section class="twelve wide column">
-        <h1 class="ui header">Paintings</h1>
+
+        
+<!--        <div id="map_div" style="height: 500px; width: 900px"></div>-->
+        <div id="map_div" ></div>
+        <h1 class="ui header">Rooms</h1>
         <h3 class="ui sub header"><?php echo 'filter'; ?></h3>
         <ul class="ui divided items" id="paintingsList">
             
           <?php  while ($work = $rooms->fetch() ){ ?>
             
           <li class="item">
-            <a class="ui small image" href="single-painting.php?id=<?php echo $work['hotelID']; ?>"><img src="images/hotels/<?php echo $work['hotelID']; ?>.jpg"></a>
+            <a class="ui small image" href="single-hotel.php?id=<?php echo $work['hotelID']; ?>"><img src="images/hotels/<?php echo $work['hotelID']; ?>.jpg"></a>
             <div class="content">
-              <a class="header" href="single-painting.php?id=<?php echo $work['roomID']; ?>"><?php echo utf8_encode($work['hotelID']); ?></a>
+              <a class="header" href="single-hotel.php?id=<?php echo $work['roomID']; ?>"><?php echo utf8_encode($work['hotelID']); ?></a>
               <div class="meta"><span class="cinema"><?php echo $work['hotelID']; ?></span></div>        
               <div class="description">
                 <p><?php echo utf8_encode($work['hotelID']); ?></p>

@@ -46,8 +46,13 @@ function outputFilterOptions($data, $valueField, $dataField) {
   }       
 }
 
-function makeArtistName($first, $last) {
+function makeName($first, $last) {
     return utf8_encode($first . ' ' . $last);
+}
+
+function generateRandomSalt() {
+    //bin2hex(random_bytes(16)).base64_encode(random_bytes(32))
+  return bin2hex(random_bytes(16));
 }
 
 ?>

@@ -12,14 +12,14 @@
                   Account
                     <i class="dropdown icon"></i>
                   <div class="menu">
-                    <a class="item"><i class="sign in icon"></i> Login</a>
+                    <a class="item" href="login.php"><i class="sign in icon"></i> Login</a>
                     <a class="item"><i class="edit icon"></i> Edit Profile</a>
                     <a class="item"><i class="globe icon"></i> Choose Language</a>
                     <a class="item"><i class="settings icon"></i> Account Settings</a>
                   </div>
                 </div>
-                <a class=" item">
-                  <i class="heartbeat icon"></i> Favorites
+                <a class=" item" href="view-reservations.php">
+                  <i class="heartbeat icon"></i> Reservation History
                 </a>        
                 <a class=" item">
                   <i class="shop icon"></i> Cart
@@ -36,13 +36,14 @@
             <a class="item" href="index.php">
               <i class="home icon"></i> Home
             </a>       
-            <a class="item">
+            <a class="item" href="contact.php">
               <i class="mail icon"></i> About Us
             </a>      
             <a class="item">
-              <i class="home icon"></i> Blog
-            </a>      
-            <div class="ui simple dropdown item">
+              <i class="home icon" href="reservation.php"></i> Choose Location
+            </a>
+            
+<!--            <div class="ui simple dropdown item">
               <i class="grid layout icon"></i>
               Browse
                 <i class="dropdown icon"></i>
@@ -52,7 +53,7 @@
                 <a class="item" href="browse-paintings.php"><i class="paint brush icon"></i> Paintings</a>
                 <a class="item"><i class="cube icon"></i> Subjects</a>
               </div>
-            </div>        
+            </div> -->       
             <div class="right item">
                 <div class="ui mini icon input">
                   <input type="text" placeholder="Search ...">
