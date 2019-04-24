@@ -22,15 +22,30 @@ class RoomsDB
         return $statement->fetch();
 
     }
+    /*
+    public function findByHotelIdType($id,$type,$checkin,$checkout)
+    {
+        $sql = self::$baseSQL .  ' WHERE hotelID=? 
+                                    AND typeID=?
+                                    AND roomID NOT IN( SELECT roomID 
+                                                    FROM reservations 
+                                                    WHERE Rooms.roomID = reservations.roomID
+                                                        AND startDate BETWEEN ? AND ? 
+                                                        OR ? BETWEEN startDate AND endDate )' . self::$constraint;
+        $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($id,$type,$checkin,$checkout,$checkin));
+        
+        return $statement;
+
+    }
+    */
     
     public function findByHotelIdType($id,$type,$checkin,$checkout)
     {
         $sql = self::$baseSQL .  ' WHERE hotelID=? 
                                     AND typeID=?
-                                    AND NOT EXISTS( SELECT * 
+                                    AND roomID NOT IN( SELECT roomID 
                                                     FROM reservations 
-                                                    WHERE Rooms.roomID = reservations.roomID
-                                                        AND startDate BETWEEN ? AND ? 
+                                                    WHERE startDate BETWEEN ? AND ? 
                                                         OR ? BETWEEN startDate AND endDate )' . self::$constraint;
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($id,$type,$checkin,$checkout,$checkin));
         

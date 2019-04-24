@@ -27,6 +27,15 @@ function generateLink($url,$label) {
     return "<a href='$url'>$label</a>";
 }
 
+// working here
+function generateAddressArray($data,$street,$city,$state,$zip) {
+    $info = array();
+    while ($single = $data->fetch()){
+        $str = $single[$street].$single[$city].$single[$state].$single[$zip];
+        array_push($info,$str);
+    }
+    return $info;
+}
 
 
 function outputFilterOptions($data, $valueField, $dataField) {

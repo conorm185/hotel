@@ -359,20 +359,41 @@ AND NOT EXISTS(SELECT *
 
 $sql
 
-SELECT * 
-FROM Rooms 
-WHERE hotelID=? 
-AND typeID=? 
-AND NOT EXISTS( SELECT * 
-		FROM reservations 
-		WHERE Rooms.roomID = reservations.roomID 
-			AND startDate BETWEEN ? AND ? 
-			OR ? BETWEEN startDate AND endDate ) order by RoomID LIMIT 20
 
 
-
+find rooms at a given hotel of a certain type
 
 SELECT * 
-FROM `reservations` 
-INNER JOIN rooms on reservations.roomID=rooms.roomID
-Where hotelID=1;
+FROM `rooms` 
+WHERE hotelID=1
+AND typeID=8;
+
+
+
+SELECT *
+FROM `rooms`
+WHERE hotelID = 1 
+AND typeID = 8 
+AND roomID NOT IN(
+    SELECT
+        roomID
+    FROM
+        reservations
+    WHERE
+        Rooms.roomID = reservations.roomID AND startDate BETWEEN '2019-01-01' AND '2019-01-02' OR '2008-01-01' BETWEEN startDate AND endDate
+)
+
+
+SELECT
+    *
+FROM
+    `rooms`
+WHERE
+    hotelID = 1 AND typeID = 8 AND roomID NOT IN(
+    SELECT
+        roomID
+    FROM
+        reservations
+    WHERE
+        startDate BETWEEN '2019-01-01' AND '2019-01-02' OR '2008-01-01' BETWEEN startDate AND endDate
+)
