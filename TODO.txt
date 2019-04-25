@@ -1,0 +1,83 @@
+
+------------------------------------HTML/PHP Work--------------------------------------------
+
+work on reservation-history.php
+	takes the userID from session
+	queries reservations for all reservations from 
+	split query results into past and present/future reservations
+	generate 'leave review' button for past reservations. (or view review if one already exists)
+	generate cancel reservation button for future reservations
+	calculate ammount due for each reservation
+
+work on review.php
+	should only be accessible from the reservation-history.php button (POST to hide reservation_id)
+	for now just a simple form that gets inserted to the review table
+	enforce unique reservation_id	
+
+work on single-hotel.php
+	picture wheel of exterior and interior images
+	hotel name and address
+	list of amenities pulled from DB
+	brief description paragraph
+	number of stars based off of hotels.rating
+	5 most recent reviews along the bottom
+
+work on header.php
+	if logged out swap acount nav bar for login button
+	edit main nav bar
+
+work on footer.php
+	social media links
+work on profile.php
+
+work on settings.php
+
+
+
+work on index.php
+	make it consistant with the header/footer format of the rest of the website
+work on about.php
+	make it consistant with the header/footer format of the rest of the website
+work on contact.php
+	make it consistant with the header/footer format of the rest of the website
+
+session starts
+session redirects to login page for(reservation.php)
+
+
+
+---------------------------------RESOURCE WORK-----------------------------------------
+come up with a company logo for the header
+gather a few businessmen images to use on the about us page
+gather 81 exterior pictures of different hotels to use as resources
+gather some interior pictures to use generically. (lobbies, hotel pools, hotel gyms)
+gather interior room images
+
+
+
+
+
+
+------------------------------------DATABASE WORK-------------------------------------------
+create triggers to restrict input values
+create a more standardized way of hotel room count and layout
+connect reviewIDs to reservationIDs
+
+rename columns to the review_id notation.  no capitals
+	-update DB access classes to reflect these changes
+
+decide what to do with the employees table
+	maybe create a cleaning scheduling table to connect to.
+
+create views and work on DB access security
+
+add hotel amenities to hotels table
+
+
+
+
+
+
+
+
+
