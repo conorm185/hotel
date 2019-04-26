@@ -12,7 +12,7 @@ foreach ($_SESSION as $key => $value){
 try {
     $roomsDB = new roomsDB($pdo);
     $rooms = $roomsDB->getAll();
-    //$rooms = $roomsDB->findByHotelId('1');
+
     $roomTypeDB = new RoomTypeDB($pdo);
     $type = $roomTypeDB->getAll();
     
@@ -35,63 +35,7 @@ try {
 catch (PDOException $e) {
    die( $e->getMessage() );
 }
-/*
-if(!isset($_SESSION['email']) ){
-    
-    header('location: login.php');
-}
 
-try {
-    
-    // connect and retrieve data for filters    
-    $artistDB = new ArtistDB($pdo);
-    $artists = $artistDB->getAll();   
-    
-    $galleryDB = new GalleryDB($pdo);
-    $galleries = $galleryDB->getAll(); 
-    
-    $shapeDB = new ShapeDB($pdo);
-    $shapes = $shapeDB->getAll();    
-    
-    
-    // now retrieve paintings ... either all or a subset
-    $paintDB = new PaintingDB($pdo);
-    
-    // filter by artist?
-    if (isset($_GET['artist']) && ! empty($_GET['artist'])) {
-        $paintings = $paintDB->findByArtist($_GET['artist']);
-        
-        $artist = $artistDB->findById($_GET['artist']);
-        $filter = 'Artist = ' . makeArtistName($artist['FirstName'],$artist['LastName']) ;
-    }
-    
-    // filter by museum?
-    if (isset($_GET['museum']) && ! empty($_GET['museum'])) {
-        $paintings = $paintDB->findByGallery($_GET['museum']);
-        
-        $museum = $galleryDB->findById($_GET['museum']);
-        $filter = 'Museum = ' . utf8_encode($museum['GalleryName']);
-    }    
-    
-    // filter by shape?
-    if (isset($_GET['shape']) && ! empty($_GET['shape'])) {
-        $paintings = $paintDB->findByShape($_GET['shape']);
-        
-        $shape = $shapeDB->findById($_GET['shape']);
-        $filter = 'Shape = ' . $shape['ShapeName'];
-    }     
-                                            
-    if (! isset($paintings) || $paintings->rowCount() == 0) {
-        $paintings = $paintDB->getAll();
-        $filter = "All Paintings [Top 20]";
-    }
-    
-        
-}
-catch (PDOException $e) {
-   die( $e->getMessage() );
-}
-*/
 
 ?>
 <!DOCTYPE html>
@@ -105,7 +49,7 @@ catch (PDOException $e) {
     <script src="css/semantic.js"></script>
     <script src="js/misc.js"></script>
     
-    <script src="js/bootstrap.js"></script>
+<!--    <script src="js/bootstrap.js"></script>-->
     <link href="css/bootstrap.css" rel="stylesheet" >
     
     <link href="css/semantic.css" rel="stylesheet" >

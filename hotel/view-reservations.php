@@ -1,15 +1,16 @@
 <?php
-
+session_start();
 include 'includes/config.inc.php';
 
-session_start();
 
-if (! isset($_SESSION['favorites'])) {
-    $favorites = array();
-    $_SESSION['favorites'] = $favorites;
+
+if(isset($_SESSION['email'])){
+    print_r($_SESSION);
+    $reservationsDB = new reservationsDB($pdo);
+    $reservations = $reservationsDB->findByCustomerId($_SESSION['customer_id']);
+}else{
+    header('location: login.php');
 }
-
-$favorites = $_SESSION['favorites'];
 
 
 ?>
@@ -24,7 +25,8 @@ $favorites = $_SESSION['favorites'];
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="css/semantic.js"></script>
 
-
+    <link href="css/bootstrap.css" rel="stylesheet" >
+    
     <link href="css/semantic.css" rel="stylesheet" >
     <link href="css/icon.css" rel="stylesheet" >
     <link href="css/styles.css" rel="stylesheet">
@@ -42,20 +44,26 @@ $favorites = $_SESSION['favorites'];
         <table class="ui basic collapsing table">
           <thead>
             <tr>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Action</th>
+                <th>Image</th>
+                <th>Hotel</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Amount Due</th>
           </tr></thead>
           <tbody>
-              <?php
-                foreach ($favorites as $fav) {
-                    echo '<tr>';
-                    echo '<td><img src="images/art/works/square-small/' . $fav[1] . '.jpg"></td>';
-                    echo '<td><a href="single-painting.php?id=' . $fav[0] . '">' . $fav[2] . '</a></td>';
-                    echo '<td><a class="ui small button" href="remove-favorites.php?id=' . $fav[0] . '">Remove</a></td>';
-                    echo '</tr>';
-                }
-              ?>
+              <?php while ($work = $reservations->fetch() ){ ?>
+              
+              <tr>
+                <td><img src="images/hotels/.jpg"></td>
+                <td><?php echo $work['roomID']; ?></td>
+                <td><?php echo $work['startDate']; ?></td>
+                <td><?php echo $work['endDate']; ?></td>
+                <td><?php echo $work['length']; ?></td>
+              </tr>
+                  
+                  
+              <?php } ?>
+                         
           </tbody>
           <tfoot class="full-width">
               <th colspan="3">
@@ -69,8 +77,7 @@ $favorites = $_SESSION['favorites'];
 
 </main>
 
-  <footer class="ui black inverted segment">
-      <div class="ui container">footer</div>
-  </footer>
+<?php include 'includes/footer.inc.php'; ?>
+    
 </body>
 </html>

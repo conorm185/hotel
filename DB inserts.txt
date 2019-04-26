@@ -263,12 +263,18 @@ DECLARE randomLength int DEFAULT 1;
 DECLARE endDay date DEFAULT "2009-04-19";
 DECLARE randomRoomID int DEFAULT 1;
 DECLARE randomCustomerID int DEFAULT 1;
-WHILE (i <= 100000) DO
+WHILE (i <= 40000) DO
 	set @randomDay = DATE_ADD("2009-04-19", INTERVAL FLOOR(RAND()*(3740-1+1)+1) DAY);
 	set @randomLength = FLOOR(RAND()*(14-1+1)+1);
 	set @endDay = DATE_ADD(@randomDay, INTERVAL @randomLength DAY);
 	set @randomRoomID = FLOOR(RAND()*(4883-1+1)+1);
-    set @randomCustomerID = FLOOR(RAND()*(50-1+1)+1);    
+    set @randomCustomerID = FLOOR(RAND()*(5000-1+1)+1);
+    
+    IF (@randomCustomerID > 51)
+    THEN
+    	set @randomCustomerID = 1;
+    END IF;
+    
     IF  (EXISTS(SELECT * FROM (    	SELECT *
     					FROM reservations
 					    WHERE roomID = @randomRoomID) AS t
@@ -282,6 +288,7 @@ WHILE (i <= 100000) DO
     SET i = i+1;
 END WHILE;
 END;
+//
 CALL generateReservations();
 
 

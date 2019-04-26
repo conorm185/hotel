@@ -28,13 +28,19 @@ $email = 'root';
 
     if ($isValid) {
       //check the username & password match
-        echo "you are here3";
+        
         $info = $logonDB->validateUser($_POST['email'],$_POST['password']);
-
-        if ($info['Pass'] == md5($_POST['password'].$info['Salt'])){
-            $_SESSION['email'] = $_POST['email'];
-            header("Location: browse-paintings.php");
+        if ($info['pass'] == md5($_POST['password'].$info['salt'])){
+            $_SESSION['email'] = $info['email'];
+            $_SESSION['customer_id'] = $info['customerID'];
+            //break;
+            //$_SESSION['name'] = $info['Pass'];
+            //$_SESSION['customer_id'] = $info['Pass'];
+            header("Location: reservation.php");
         }
+        
+        
+        
     }
 
   }
@@ -50,7 +56,9 @@ $email = 'root';
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="css/semantic.js"></script>
-
+    
+    <script src="js/bootstrap.js"></script>
+    <link href="css/bootstrap.css" rel="stylesheet" >
 
     <link href="css/semantic.css" rel="stylesheet" >
     <link href="css/icon.css" rel="stylesheet" >
@@ -103,7 +111,6 @@ $email = 'root';
         </div>
 </body>
 
-<footer class="ui black inverted segment">
-    <div class="ui container">footer</div>
-</footer>
+<?php include 'includes/footer.inc.php'; ?>
+    
 </html>

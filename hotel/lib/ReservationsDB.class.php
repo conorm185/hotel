@@ -23,6 +23,14 @@ class ReservationsDB
 
     }
 
+        public function findByCustomerId($id)
+    {
+        $sql = self::$baseSQL .  ' WHERE CustomerID=? ';
+        $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($id));
+        return $statement;
+
+    }
+    
     public function getAll()
     {
         $sql = self::$baseSQL . self::$constraint;

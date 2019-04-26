@@ -1,8 +1,8 @@
 <?php
 
   session_start();
-include 'includes/art-config.inc.php';
-include 'includes/art-functions.inc.php';
+include 'includes/config.inc.php';
+include 'includes/functions.inc.php';
 $logonDB = new LogonDB($pdo);
 
     $isValid = true;
@@ -27,7 +27,13 @@ $logonDB = new LogonDB($pdo);
 
     if ($isValid) {
         $logonDB->insertUser($_POST['email'],$_POST['password']);
-        header("Location: login.php");  
+            header("Location: login.php");
+        /*try {
+            $logonDB->insertUser($_POST['email'],$_POST['password']);
+            header("Location: login.php");
+        } catch (PDOException $e) {
+            $errors .= $e;
+        }  */
     }
 
   }
@@ -47,7 +53,9 @@ $logonDB = new LogonDB($pdo);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="css/semantic.js"></script>
 
-
+    <script src="js/bootstrap.js"></script>
+    <link href="css/bootstrap.css" rel="stylesheet" >
+    
     <link href="css/semantic.css" rel="stylesheet" >
     <link href="css/icon.css" rel="stylesheet" >
     <link href="css/styles.css" rel="stylesheet">
@@ -56,7 +64,7 @@ $logonDB = new LogonDB($pdo);
 </head>
 <body >
 
-        <?php include 'includes/art-header.inc.php'; ?>
+        <?php include 'includes/header.inc.php'; ?>
 
         <div class="ui middle aligned center aligned grid">
           <section class="four wide column">
@@ -95,7 +103,10 @@ $logonDB = new LogonDB($pdo);
 
               </div>
 
-              <div class="ui error message"><?php  echo $errors; ?></div>
+              <div class="ui error message">here
+                  
+                  <br>
+                  <?php  echo $errors; ?></div>
                 
             </form>
 
@@ -103,7 +114,6 @@ $logonDB = new LogonDB($pdo);
         </div>
 </body>
 
-<footer class="ui black inverted segment">
-    <div class="ui container">footer</div>
-</footer>
+<?php include 'includes/footer.inc.php'; ?>
+    
 </html>

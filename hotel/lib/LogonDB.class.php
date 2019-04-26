@@ -25,7 +25,7 @@ class LogonDB
     
     public function findByUser($UserName)
     {
-        $sql = 'SELECT Salt FROM customerlogon WHERE UserName=? ';
+        $sql = 'SELECT Salt FROM customerlogon WHERE email=? ';
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($UserName));
         return $statement->fetch();      
     }
@@ -41,7 +41,7 @@ class LogonDB
     {
         $salt = self::findByUser($UserName);
         $password = md5($Pass.$salt['Salt']);
-        $sql = self::$baseSQL .' WHERE UserName=? AND Pass=?'. self::$constraint;
+        $sql = self::$baseSQL .' WHERE email=? AND Pass=?'. self::$constraint;
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($UserName,$password));
         return $statement->fetch();        
     }   
@@ -49,7 +49,7 @@ class LogonDB
     public function insertUser($UserName,$Pass)
     {
         $salt = generateRandomSalt();
-        $sql = 'INSERT INTO customerlogon (UserName,Pass,Salt,State,DateJoined,DateLastModified) VALUES(?,?,?,1,NOW(),NOW())';
+        $sql = 'INSERT INTO customerlogon (email,Pass,Salt,State,DateJoined) VALUES(?,?,?,1,NOW())';
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($UserName,md5($Pass.$salt),$salt));
         return $statement;        
     } 
