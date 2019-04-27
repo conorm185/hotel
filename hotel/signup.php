@@ -59,15 +59,25 @@ $logonDB = new LogonDB($pdo);
     <link href="css/semantic.css" rel="stylesheet" >
     <link href="css/icon.css" rel="stylesheet" >
     <link href="css/styles.css" rel="stylesheet">
-
-
+    
+    <style type="text/css">
+        body {
+          background-color: #DADADA;
+        }
+        body > .grid {
+          height: 100%;
+        }
+        .column {
+          max-width: 450px;
+        }
+    </style>
 </head>
 <body >
 
         <?php include 'includes/header.inc.php'; ?>
 
         <div class="ui middle aligned center aligned grid">
-          <section class="four wide column">
+          <section class="four wide column"> 
             <h2 class="ui teal image header">
 
               <div class="content">
