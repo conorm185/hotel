@@ -11,12 +11,18 @@ try {
 
         $reviewDB = new ReviewDB($pdo);
         $reviews = $reviewDB->findByHotelId($_GET['hotel_id']);
+        
+        $roomsDB = new roomsDB($pdo);
+        $rooms = $roomsDB->findCountByHotelId($_GET['hotel_id']);
     }else{
         $hotelsDB = new hotelsDB($pdo);
         $hotels = $hotelsDB->findById(1);
 
         $reviewDB = new ReviewDB($pdo);
         $reviews = $reviewDB->findByHotelId(1);
+        
+        $roomsDB = new roomsDB($pdo);
+        $rooms = $roomsDB->findCountByHotelId(1);
     }
 }
 catch (PDOException $e) {

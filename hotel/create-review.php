@@ -4,7 +4,7 @@
     include 'includes/functions.inc.php';
 
     $reservationsDB = new reservationsDB($pdo);
-    $reservations = $reservationsDB->findById ($_SESSION['customer_id']);
+    $reservations = $reservationsDB->findById ($_GET['id']);
     
     $roomsDB = new roomsDB($pdo);
     $rooms = $roomsDB->findById($reservations['roomID']);

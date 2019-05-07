@@ -1,8 +1,6 @@
 <div class="ui top attached tabular menu ">
     <a class="active item" data-tab="details"><i class="image icon"></i>Details</a>
-    <a class="item" data-tab="museum"><i class="university icon"></i>Museum</a>
-    <a class="item" data-tab="genres"><i class="theme icon"></i>Genres</a>
-    <a class="item" data-tab="subjects"><i class="cube icon"></i>Subjects</a>    
+    <a class="item" data-tab="museum"><i class="university icon"></i>Location</a>    
 </div>
                 
 <div class="ui bottom attached active tab segment" data-tab="details">
@@ -10,7 +8,7 @@
     <tbody>
       <tr>
         <td>Rooms</td>
-        <td><?php echo 'here1'; ?></td>                       
+        <td><?php echo $rooms['COUNT(roomID)']; ?></td>                       
       </tr>
       <tr>                       
         <td>Floors</td>
@@ -32,49 +30,29 @@
     <table class="ui definition very basic collapsing celled table">
       <tbody>
         <tr>
-          <td>Museum</td>
+          <td>Street</td>
           <td>
-            <?php echo 'here2'; ?>
+            <?php echo $hotels['address']; ?>
           </td>
         </tr>       
         <tr>
-          <td>Accession #</td>
+          <td>City</td>
           <td>
-            <?php echo  'here2'; ?>
+            <?php echo $hotels['city']; ?>
           </td>
         </tr>  
         <tr>
-          <td>Copyright</td>
+          <td>State</td>
           <td>
-            <?php echo  'here2'; ?>
+            <?php echo $hotels['state']; ?>
           </td>
         </tr>       
         <tr>
-          <td>URL</td>
+          <td>Zip Code</td>
           <td>
-            <?php echo 'here2'; ?>
+            <?php echo $hotels['zip']; ?>
           </td>
         </tr>        
       </tbody>
     </table>    
 </div>   
-
-<div class="ui bottom attached tab segment" data-tab="genres">
-    <ul class="ui list">
-      <?php /*foreach ($genres as $gen) { ?>
-        <li class="item">
-          <?php echo generateLink('single-genre.php?id='. $gen['GenreID'], $gen['GenreName']); ?>
-        </li>
-      <?php } */?>
-    </ul>
-</div>  
-
-<div class="ui bottom attached tab segment" data-tab="subjects">
-    <ul class="ui list">
-          <?php /*foreach ($subjects as $sub) { ?>
-            <li class="item">
-              <?php echo generateLink('single-subject.php?id='. $sub['SubjectID'], $sub['SubjectName']); ?>
-            </li>
-          <?php }*/ ?>
-    </ul>
-</div>  

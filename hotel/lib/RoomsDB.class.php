@@ -23,6 +23,13 @@ class RoomsDB
 
     }
     
+    public function findCountByHotelId($id)
+    {
+        $sql = 'SELECT COUNT(roomID) FROM Rooms WHERE hotelID=? ';
+        $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($id));
+        return $statement->fetch();
+
+    }
     /*
     public function findByHotelIdType($id,$type,$checkin,$checkout)
     {

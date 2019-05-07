@@ -56,7 +56,7 @@ if(isset($_SESSION['email'])){
               
               <tr>
                 <td><img class="ui small image" src="images/hotels/hotel%20(<?php echo $work['HotelID']; ?>).jpg"></td>
-                <td><?php echo $work['name']; ?></td>
+                <td><a class="ui small header" href="single-hotel.php?hotel_id=<?php echo $work['HotelID']; ?>"><?php echo $work['name']; ?></a></td>
                 <td><?php echo $work['startDate']; ?></td>
                 <td><?php echo $work['endDate']; ?></td>
                 <td>$<?php echo number_format(calcCost($work['rate'],$work['length']),2); ?></td>

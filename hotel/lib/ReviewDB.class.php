@@ -24,7 +24,7 @@ class ReviewDB
     }
     public function findByHotelId($id)
     {
-        $sql = self::$baseSQL .  ' WHERE hotelID=? LIMIT 5';
+        $sql = self::$baseSQL .  ' WHERE hotelID=? ORDER BY date DESC';
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($id));
         return $statement;
     }
