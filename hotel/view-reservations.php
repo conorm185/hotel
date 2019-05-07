@@ -5,7 +5,6 @@ include 'includes/config.inc.php';
 
 
 if(isset($_SESSION['email'])){
-    print_r($_SESSION);
     $reservationsDB = new reservationsDB($pdo);
     $reservations = $reservationsDB->findByCustomerId($_SESSION['customer_id']);
 }else{
@@ -49,6 +48,7 @@ if(isset($_SESSION['email'])){
                 <th>Start</th>
                 <th>End</th>
                 <th>Amount Due</th>
+                <th>Review</th>
           </tr></thead>
           <tbody>
               <?php while ($work = $reservations->fetch() ){ ?>
@@ -59,12 +59,17 @@ if(isset($_SESSION['email'])){
                 <td><?php echo $work['startDate']; ?></td>
                 <td><?php echo $work['endDate']; ?></td>
                 <td><?php echo $work['length']; ?></td>
+                <td><a class="ui small button" href="review.php?id=<?php echo $work['resID']; ?>">Review</a></td>';  
+                  
+                  
+                  
               </tr>
                   
                   
               <?php } ?>
                          
           </tbody>
+            
           <tfoot class="full-width">
               <th colspan="3">
                 <a class="ui left floated small primary labeled icon button" href="remove-favorites.php">

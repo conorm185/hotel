@@ -22,6 +22,7 @@ class RoomsDB
         return $statement->fetch();
 
     }
+    
     /*
     public function findByHotelIdType($id,$type,$checkin,$checkout)
     {

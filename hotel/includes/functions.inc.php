@@ -12,10 +12,10 @@ function generateReviewStars($rating) {
 
 function generateRatingStars($rating) {
   $output = "";
-  for ($i=0; $i<$rating; $i++) {
+  for ($i=0; $i<ceil($rating); $i++) {
     $output .= '<i class="orange star icon"></i>';
   }
-  for ($i=$rating; $i<5; $i++) {
+  for ($i=ceil($rating); $i<5; $i++) {
     $output .= '<i class="empty star icon"></i>';
   }
   
@@ -52,7 +52,7 @@ function makeName($first, $last) {
 
 function generateRandomSalt() {
     //bin2hex(random_bytes(16)).base64_encode(random_bytes(32))
-  return bin2hex(random_bytes(16));
+  return md5(bin2hex(random_bytes(16)));
 }
 
 ?>

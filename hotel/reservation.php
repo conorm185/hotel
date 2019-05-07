@@ -22,12 +22,12 @@ try {
     
     
     
-    if (isset($_GET['hotel']) && ! empty($_GET['hotel'])
+    if (isset($_GET['hotel_id']) && ! empty($_GET['hotel_id'])
        &&isset($_GET['type']) && ! empty($_GET['type'])
        &&isset($_GET['checkin']) && ! empty($_GET['checkin'])
        &&isset($_GET['checkout']) && ! empty($_GET['checkout'])) {
         
-        $rooms = $roomsDB->findByHotelIdType($_GET['hotel'],$_GET['type'],$_GET['checkin'],$_GET['checkout']);
+        $rooms = $roomsDB->findByHotelIdType($_GET['hotel_id'],$_GET['type'],$_GET['checkin'],$_GET['checkout']);
 
     }
     
@@ -56,14 +56,9 @@ catch (PDOException $e) {
     <link href="css/icon.css" rel="stylesheet" >
     <link href="css/styles.css" rel="stylesheet">
  
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxssYVhHUvkzWVhzQyU39SPVzZfwWZZJU&callback=initMap"
-            type="text/javascript"></script>
+    <!--
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      
-      
- 
-      
+    <script type="text/javascript">     
     google.charts.load('current', {
       'packages': ['map'],
       'mapsApiKey': 'AIzaSyBxssYVhHUvkzWVhzQyU39SPVzZfwWZZJU'
@@ -76,12 +71,11 @@ catch (PDOException $e) {
           ['Lat', 'Long', 'Name']
             
            <?php   
-            while ($single = $hotels->fetch()) { 
+            /*while ($single = $hotels->fetch()) { 
                 echo ',[' . $single['latitude'] . ',' . $single['longitude'] . ',\'' . $single['name'] . '\']';
-            }
+            }*/
             ?> 
         ]);
-        
         
         
       var options = {
@@ -115,7 +109,10 @@ catch (PDOException $e) {
 
       map.draw(data, options);
     }
-    </script>
+
+        
+    </script>-->
+    
     
 </head>
 <body >
@@ -139,7 +136,7 @@ catch (PDOException $e) {
           <?php  while ($work = $rooms->fetch() ){ ?>
             
           <li class="item">
-            <a class="ui small image" href="single-hotel.php?id=<?php echo $work['hotelID']; ?>"><img src="images/hotels/<?php echo $work['hotelID']; ?>.jpg"></a>
+            <a class="ui small image" href="single-hotel.php?id=<?php echo $work['hotelID']; ?>"><img src="images/interior/1.jpg"></a>
             <div class="content">
               <a class="header" href="single-hotel.php?id=<?php echo $work['roomID']; ?>"><?php echo utf8_encode($work['hotelID']); ?></a>
               <div class="meta"><span class="cinema"><?php echo $work['hotelID']; ?></span></div>        

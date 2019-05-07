@@ -4,13 +4,7 @@
   <h3 class="ui dividing header">Filters</h3>
 
   <div class="field">
-    <label>Hotel</label>
-    <select class="ui fluid dropdown" name="hotel">
-        <option value='0'>Select Hotel</option>  
-        <?php  
-            outputFilterOptions($hotels, 'HotelID', 'name');
-        ?>
-    </select>
+     <input type="hidden" id="hotel_id" name="hotel_id" value="<?php echo $_GET['hotel_id']  ?>">
   </div> 
     
   <div class="field">

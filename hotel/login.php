@@ -36,7 +36,7 @@ $email = 'root';
             //break;
             //$_SESSION['name'] = $info['Pass'];
             //$_SESSION['customer_id'] = $info['Pass'];
-            header("Location: reservation.php");
+            header("Location: index.php");
         }
         
         

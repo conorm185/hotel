@@ -3,13 +3,13 @@
    Handles database access for the Artist table.
 
  */
-class ReservationsDB
+class ReviewDB
 {
 
     private $pdo = null;
 
-    private static $baseSQL = "SELECT * FROM Reservations";
-    private static $constraint = ' order by resID';
+    private static $baseSQL = "SELECT * FROM Review";
+    private static $constraint = ' order by reviewID';
 
     public function __construct($connection) {
         $this->pdo = $connection;
@@ -17,18 +17,16 @@ class ReservationsDB
 
     public function findById($id)
     {
-        $sql = self::$baseSQL .  ' WHERE resID=? ';
+        $sql = self::$baseSQL .  ' WHERE ReviewID=? ';
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($id));
         return $statement->fetch();
 
     }
-
-        public function findByCustomerId($id)
+    public function findByHotelId($id)
     {
-        $sql = self::$baseSQL .  ' WHERE CustomerID=? ORDER BY startDate';
+        $sql = self::$baseSQL .  ' WHERE hotelID=? LIMIT 5';
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($id));
         return $statement;
-
     }
     
     public function getAll()
@@ -37,7 +35,13 @@ class ReservationsDB
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, null);
         return $statement;
     }
-
+    
+    public function insertReview($id,$customerID,$hotelID,$rating,$comment)
+    {
+        $sql = 'INSERT INTO review(reviewID, customerID, hotelID, rating, comment) VALUES (?,?,?,?,?)';
+        $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($id,$customerID,$hotelID,$rating,$comment));
+        return $statement;        
+    } 
 }
 
 ?>

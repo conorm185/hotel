@@ -51,14 +51,26 @@
               <i class="home icon"></i> Home
             </a>       
             <a class="item" href="about.php">
-              <i class="tag icon"></i> About Us
-            </a>      
-            <a class="item" href="reservation.php">
-              <i class="bookmark icon" ></i> Choose Location
+              <i class="mail icon"></i> About Us
             </a>
-			<a class="item" href="contact.php">
-              <i class="phone icon"></i> Contact
-            </a>       
+            <a class="item" href="contact.php">
+              <i class="mail icon"></i> Contact Us
+            </a> 
+            <a class="item" href="choose-location.php">
+              <i class="home icon" ></i> Choose Location
+            </a>
+            
+<!--            <div class="ui simple dropdown item">
+              <i class="grid layout icon"></i>
+              Browse
+                <i class="dropdown icon"></i>
+              <div class="menu">
+                <a class="item" href="browse-artists.php"><i class="users icon"></i> Artists</a>
+                <a class="item" href="browse-genres.php"><i class="theme icon"></i> Genres</a>
+                <a class="item" href="browse-paintings.php"><i class="paint brush icon"></i> Paintings</a>
+                <a class="item"><i class="cube icon"></i> Subjects</a>
+              </div>
+            </div> -->       
             <div class="right item">
                 <div class="ui mini icon input">
                   <input type="text" placeholder="Search ...">
