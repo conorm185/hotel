@@ -51,10 +51,10 @@
               <i class="home icon"></i> Home
             </a>       
             <a class="item" href="about.php">
-              <i class="museum icon"></i> About Us
+              <i class="tag icon"></i> About Us
             </a>      
             <a class="item" href="reservation.php">
-              <i class="home icon" ></i> Choose Location
+              <i class="bookmark icon" ></i> Choose Location
             </a>
 			<a class="item" href="contact.php">
               <i class="phone icon"></i> Contact
