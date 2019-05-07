@@ -46,6 +46,10 @@ function outputFilterOptions($data, $valueField, $dataField) {
   }       
 }
 
+function calcCost($rate, $length) {
+    return ($rate * $length);
+}
+
 function makeName($first, $last) {
     return utf8_encode($first . ' ' . $last);
 }

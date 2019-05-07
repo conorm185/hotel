@@ -25,7 +25,7 @@ class ReservationsDB
 
         public function findByCustomerId($id)
     {
-        $sql = self::$baseSQL .  ' WHERE CustomerID=? ORDER BY startDate';
+        $sql = 'SELECT * FROM view_reservations WHERE CustomerID=? ORDER BY startDate DESC';
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($id));
         return $statement;
 
@@ -37,7 +37,19 @@ class ReservationsDB
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, null);
         return $statement;
     }
-
+    
+    public function insertReservation($room_id,$customer_id,$start,$end)
+    {
+        //$diff=date_diff($start,$end);
+        
+        $datetime1 = date_create($start);
+        $datetime2 = date_create($end);
+        $interval = date_diff($datetime1, $datetime2);
+        $length = $interval->format('%a');
+        $sql = 'INSERT INTO reservations(roomID, customerID, startDate, endDate, length) VALUES (?,?,?,?,?)';
+        $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($room_id,$customer_id,$start,$end,$length));
+        return $statement;        
+    } 
 }
 
 ?>

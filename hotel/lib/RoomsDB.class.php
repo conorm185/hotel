@@ -42,8 +42,8 @@ class RoomsDB
     
     public function findByHotelIdType($id,$type,$checkin,$checkout)
     {
-        $sql = self::$baseSQL .  ' WHERE hotelID=? 
-                                    AND typeID=?
+        $sql = self::$baseSQL .  ' INNER JOIN roomType ON roomType.typeID=Rooms.typeID  WHERE hotelID=? 
+                                    AND Rooms.typeID=?
                                     AND roomID NOT IN( SELECT roomID 
                                                     FROM reservations 
                                                     WHERE startDate BETWEEN ? AND ? 

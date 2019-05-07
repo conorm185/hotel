@@ -54,65 +54,7 @@ catch (PDOException $e) {
     
     <link href="css/semantic.css" rel="stylesheet" >
     <link href="css/icon.css" rel="stylesheet" >
-    <link href="css/styles.css" rel="stylesheet">
- 
-    <!--
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">     
-    google.charts.load('current', {
-      'packages': ['map'],
-      'mapsApiKey': 'AIzaSyBxssYVhHUvkzWVhzQyU39SPVzZfwWZZJU'
-    });
-    google.charts.setOnLoadCallback(drawMap);
-
-    function drawMap () {
-        
-        var data = google.visualization.arrayToDataTable([
-          ['Lat', 'Long', 'Name']
-            
-           <?php   
-            /*while ($single = $hotels->fetch()) { 
-                echo ',[' . $single['latitude'] . ',' . $single['longitude'] . ',\'' . $single['name'] . '\']';
-            }*/
-            ?> 
-        ]);
-        
-        
-      var options = {
-        mapType: 'styledMap',
-        zoomLevel: 4,
-        showTooltip: true,
-        showInfoWindow: true,
-        useMapTypeControl: true,
-        maps: {
-          // Your custom mapTypeId holding custom map styles.
-          styledMap: {
-            name: 'Styled Map', // This name will be displayed in the map type control.
-            styles: [
-              {featureType: 'poi.attraction',
-               stylers: [{color: '#fce8b2'}]
-              },
-              {featureType: 'road.highway',
-               stylers: [{hue: '#0277bd'}, {saturation: -50}]
-              },
-              {featureType: 'road.highway',
-               elementType: 'labels.icon',
-               stylers: [{hue: '#000'}, {saturation: 100}, {lightness: 50}]
-              },
-              {featureType: 'landscape',
-               stylers: [{hue: '#259b24'}, {saturation: 10}, {lightness: -22}]
-              }
-        ]}}
-      };
-
-      var map = new google.visualization.Map(document.getElementById('map_div'));
-
-      map.draw(data, options);
-    }
-
-        
-    </script>-->
-    
+    <link href="css/styles.css" rel="stylesheet"> 
     
 </head>
 <body >
@@ -121,7 +63,7 @@ catch (PDOException $e) {
     
 <main class="ui segment doubling stackable grid container">
     <section class="four wide column">
-        <?php $hotels = $hotelsDB->getAll(); include 'includes/browse-filters.inc.php'; ?>
+        <?php  include 'includes/browse-filters.inc.php'; $hotels = $hotelsDB->findById($_GET['hotel_id']);?>
     </section>
     
     <section class="twelve wide column">
@@ -129,26 +71,25 @@ catch (PDOException $e) {
         
 <!--        <div id="map_div" style="height: 500px; width: 900px"></div>-->
         <div id="map_div" ></div>
-        <h1 class="ui header">Rooms</h1>
+        <h1 class="ui header"><?php echo $hotels['name'] ?>: Rooms</h1>
         <h3 class="ui sub header"><?php echo 'filter'; ?></h3>
         <ul class="ui divided items" id="paintingsList">
             
           <?php  while ($work = $rooms->fetch() ){ ?>
             
           <li class="item">
-            <a class="ui small image" href="single-hotel.php?id=<?php echo $work['hotelID']; ?>"><img src="images/interior/1.jpg"></a>
+            <a class="ui small image" href="#"><img src="images/interior/1.jpg"></a>
             <div class="content">
-              <a class="header" href="single-hotel.php?id=<?php echo $work['roomID']; ?>"><?php echo utf8_encode($work['hotelID']); ?></a>
-              <div class="meta"><span class="cinema"><?php echo $work['hotelID']; ?></span></div>        
+              <a class="header" href="#"><?php echo $work['name']; ?></a>
+              <div class="meta"><span class="cinema">Beds: <?php echo $work['beds']; ?></span></div>        
               <div class="description">
-                <p><?php echo utf8_encode($work['hotelID']); ?></p>
+                <p><?php echo utf8_encode($work['description']); ?></p>
               </div>
               <div class="meta">     
-                  <strong><?php echo '$' . number_format($work['hotelID'],0); ?></strong>        
+                  <strong><?php echo '$' . number_format($work['rate'],0); ?> per day</strong>        
               </div>        
               <div class="extra">
-                <a class="ui icon orange button" href="cart.php?id=<?php echo $work['hotelID']; ?>"><i class="add to cart icon"></i></a>
-                <a class="ui icon button" href="addToFavorites.php?id=<?php echo $work['hotelID']; ?>&path=<?php echo $work['hotelID'] ?>&title=<?php echo urlencode($work['hotelID']); ?>"><i class="heart icon"></i></a>  
+                <a class="ui icon orange button" href="process-reservation.php?room_id=<?php echo $work['roomID'];?>&checkin=<?php echo $_GET['checkin'];?>&checkout=<?php echo $_GET['checkout'];?>"><i class="add to cart icon"></i></a>
               </div>        
             </div>      
           </li>

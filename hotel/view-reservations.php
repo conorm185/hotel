@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'includes/config.inc.php';
-
+include 'includes/functions.inc.php';
 
 
 if(isset($_SESSION['email'])){
@@ -39,7 +39,7 @@ if(isset($_SESSION['email'])){
 <main class="ui container">
 
     <section class="ui basic segment ">
-      <h2>Favorites</h2>
+      <h2>Reservations</h2>
         <table class="ui basic collapsing table">
           <thead>
             <tr>
@@ -54,12 +54,12 @@ if(isset($_SESSION['email'])){
               <?php while ($work = $reservations->fetch() ){ ?>
               
               <tr>
-                <td><img src="images/hotels/.jpg"></td>
-                <td><?php echo $work['roomID']; ?></td>
+                <td><img class="ui small image" src="images/hotels/hotel%20(<?php echo $work['HotelID']; ?>).jpg"></td>
+                <td><?php echo $work['name']; ?></td>
                 <td><?php echo $work['startDate']; ?></td>
                 <td><?php echo $work['endDate']; ?></td>
-                <td><?php echo $work['length']; ?></td>
-                <td><a class="ui small button" href="review.php?id=<?php echo $work['resID']; ?>">Review</a></td>';  
+                <td><?php echo calcCost($work['rate'],$work['length']); ?></td>
+                <td><a class="ui small button" href="review.php?id=<?php echo $work['resID']; ?>">Review</a></td>  
                   
                   
                   
@@ -70,13 +70,12 @@ if(isset($_SESSION['email'])){
                          
           </tbody>
             
-          <tfoot class="full-width">
+          <!--<tfoot class="full-width">
               <th colspan="3">
-                <a class="ui left floated small primary labeled icon button" href="remove-favorites.php">
-                  <i class="remove circle icon"></i> Remove All Favorites
-                </a>
+                
               </th>
-          </tfoot>
+          </tfoot>-->
+            
          </table>
     </section>
 

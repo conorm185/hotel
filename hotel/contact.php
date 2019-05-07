@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
 	include "includes/validation.class.php";
 
 	$firstname = new ValidationResult("", "", "", true);

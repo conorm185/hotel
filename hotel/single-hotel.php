@@ -5,11 +5,19 @@ include 'includes/config.inc.php';
 include 'includes/functions.inc.php';
 
 try {
-    $hotelsDB = new hotelsDB($pdo);
-    $hotels = $hotelsDB->findById($_GET['hotel_id']);
-    
-    $reviewDB = new ReviewDB($pdo);
-    $reviews = $reviewDB->findByHotelId($_GET['hotel_id']);
+    if (isset($_GET['hotel_id'])) {
+        $hotelsDB = new hotelsDB($pdo);
+        $hotels = $hotelsDB->findById($_GET['hotel_id']);
+
+        $reviewDB = new ReviewDB($pdo);
+        $reviews = $reviewDB->findByHotelId($_GET['hotel_id']);
+    }else{
+        $hotelsDB = new hotelsDB($pdo);
+        $hotels = $hotelsDB->findById(1);
+
+        $reviewDB = new ReviewDB($pdo);
+        $reviews = $reviewDB->findByHotelId(1);
+    }
 }
 catch (PDOException $e) {
    die( $e->getMessage() );
@@ -46,11 +54,11 @@ if(!isset($_SESSION['email']) ){
     <section class="ui segment grey100">
         <div class="ui doubling stackable grid container">
             <div class="nine wide column">
-              <img src="images/hotels/<?php echo  $hotels['HotelID']; ?>.jpg" alt="..." class="ui big image" id="artwork">
+              <img src="images/hotels/hotel%20(<?php echo  $hotels['HotelID']; ?>).jpg" alt="..." class="ui big image" id="artwork">
                 
                 <div class="ui fullscreen modal">
                   <div class="image content">
-                      <img src="images/hotels/<?php echo  $hotels['HotelID']; ?>.jpg" alt="..." class="image" >
+                      <img src="images/hotels/hotel%20(<?php echo  $hotels['HotelID']; ?>).jpg" alt="..." class="image" >
                       <div class="description"><p></p></div>
                   </div>
                 </div>                
