@@ -75,7 +75,7 @@ catch (PDOException $e) {
             //window.location.href = "/prog/hotel/single-hotel.php?hotel_id="+(id);
             alert("/prog/hotel/single-hotel.php?hotel_id="+(id));
         }
-        
+       
         
       function initMap() {
         
@@ -89,27 +89,15 @@ catch (PDOException $e) {
           center: myLatlng
         });
         var posArray = [];
+        var namesArray = [];
         var markerArray = [];
-    
+        var listenerArray = [];
         <?php while ($single = $hotels->fetch()) { ?>
           
         var pos = {lat: <?php echo $single['latitude'] ?>, lng: <?php echo $single['longitude'] ?>};
-        //posArray.push(pos);   
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
+        posArray.push(pos);
+        var name = '<?php echo $single['name'] ?>';
+        namesArray.push(name);
           
         <?php } ?>
           
@@ -117,18 +105,25 @@ catch (PDOException $e) {
             var marker = new google.maps.Marker({
               position: posArray[i],
               map: map,
-              title: 'Click to zoom'
+              title: namesArray[i]
             });
             
             markerArray.push(marker);
-            
-            markerArray[i].addListener('click', function(e) {
-                //alert("/prog/hotel/single-hotel.php?hotel_id="+(i));
-              });
+            attachSecretMessage(markerArray[i], namesArray[i], i);
             
         }
 
       }
+        function attachSecretMessage(marker, secretMessage,index) {
+          var infowindow = new google.maps.InfoWindow({
+            content: secretMessage
+          });
+
+          marker.addListener('click', function() {
+            window.location.href = "/hotel/hotel/single-hotel.php?hotel_id="+(index+1);
+            infowindow.open(marker.get('map'), marker);
+          });
+        } 
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxssYVhHUvkzWVhzQyU39SPVzZfwWZZJU&callback=initMap">

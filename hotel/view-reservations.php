@@ -49,6 +49,7 @@ if(isset($_SESSION['email'])){
                 <th>End</th>
                 <th>Amount Due</th>
                 <th>Review</th>
+                <th>Cancel</th>
           </tr></thead>
           <tbody>
               <?php while ($work = $reservations->fetch() ){ ?>
@@ -58,9 +59,9 @@ if(isset($_SESSION['email'])){
                 <td><?php echo $work['name']; ?></td>
                 <td><?php echo $work['startDate']; ?></td>
                 <td><?php echo $work['endDate']; ?></td>
-                <td><?php echo calcCost($work['rate'],$work['length']); ?></td>
-                <td><a class="ui small button" href="review.php?id=<?php echo $work['resID']; ?>">Review</a></td>  
-                  
+                <td>$<?php echo number_format(calcCost($work['rate'],$work['length']),2); ?></td>
+                <td><a class="ui small button green" href="review.php?id=<?php echo $work['resID']; ?>">Review</a></td>  
+                <td><a class="ui small button red" href="cancel-reservation.php?id=<?php echo $work['resID']; ?>">Cancel</a></td>
                   
                   
               </tr>

@@ -29,6 +29,8 @@ try {
         
         $rooms = $roomsDB->findByHotelIdType($_GET['hotel_id'],$_GET['type'],$_GET['checkin'],$_GET['checkout']);
 
+    }else{
+        $rooms = null;
     }
     
 }
@@ -75,10 +77,10 @@ catch (PDOException $e) {
         <h3 class="ui sub header"><?php echo 'filter'; ?></h3>
         <ul class="ui divided items" id="paintingsList">
             
-          <?php  while ($work = $rooms->fetch() ){ ?>
+          <?php if (isset($rooms)){ while ($work = $rooms->fetch() ){ ?>
             
           <li class="item">
-            <a class="ui small image" href="#"><img src="images/interior/1.jpg"></a>
+            <a class="ui small image" href="#"><img src="images/interior/<?php echo $work['typeID']; ?>.jpg"></a>
             <div class="content">
               <a class="header" href="#"><?php echo $work['name']; ?></a>
               <div class="meta"><span class="cinema">Beds: <?php echo $work['beds']; ?></span></div>        
@@ -86,7 +88,7 @@ catch (PDOException $e) {
                 <p><?php echo utf8_encode($work['description']); ?></p>
               </div>
               <div class="meta">     
-                  <strong><?php echo '$' . number_format($work['rate'],0); ?> per day</strong>        
+                  <strong><?php echo '$' . number_format($work['rate'],2); ?> per day</strong>        
               </div>        
               <div class="extra">
                 <a class="ui icon orange button" href="process-reservation.php?room_id=<?php echo $work['roomID'];?>&checkin=<?php echo $_GET['checkin'];?>&checkout=<?php echo $_GET['checkout'];?>"><i class="add to cart icon"></i></a>
@@ -94,7 +96,7 @@ catch (PDOException $e) {
             </div>      
           </li>
             
-          <?php  } ?>
+          <?php  }} ?>
 
         </ul>        
     </section>  

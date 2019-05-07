@@ -50,6 +50,12 @@ class ReservationsDB
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($room_id,$customer_id,$start,$end,$length));
         return $statement;        
     } 
+    public function removeReservation($res_id)
+    {
+        $sql = 'DELETE FROM reservations WHERE resID=?';
+        $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($res_id));
+        return $statement;        
+    } 
 }
 
 ?>

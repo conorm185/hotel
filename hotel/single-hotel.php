@@ -73,28 +73,23 @@ if(!isset($_SESSION['email']) ){
                       <div class="meta">
                         <p><?php echo generateRatingStars($hotels['rating']); ?></p>
                         <p><?php echo  'description here'; ?></p>
-                        <a class="ui right labeled icon button" href="reservation.php?hotel_id=<?php echo $_GET['hotel_id']; ?>">
-                          <i class="heart icon"></i>
+                        <a class="ui right labeled icon button green" href="reservation.php?hotel_id=<?php echo $_GET['hotel_id']; ?>">
+                          <i class="cart icon"></i>
                           Make a Reservation
                         </a> 
                       </div>  
                 </div>                          
-                  
-                <!-- Tabs For Details, Museum, Genre, Subjects -->
-                <?php include 'includes/painting-small-tabs.inc.php'; ?>
                 
-                <!-- Cart and Price -->
-                <?php //include 'includes/cart-box.inc.php'; ?>                        
+                <?php include 'includes/small-tabs.inc.php'; ?>
+>                        
                           
             </div>
         </div>
     </section>
     
     <!-- Tabs for Description, On the Web, Reviews -->
-    <?php include 'includes/painting-large-tabs.inc.php'; ?> 
-    
-    <!-- Related Images -->    
-    <?php include 'includes/related-images.inc.php'; ?>      
+    <?php include 'includes/large-tabs.inc.php'; ?> 
+      
 </main>
     
 <?php include 'includes/footer.inc.php'; ?>

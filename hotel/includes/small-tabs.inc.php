@@ -9,20 +9,20 @@
   <table class="ui definition very basic collapsing celled table">
     <tbody>
       <tr>
-        <td>Artist</td>
+        <td>Rooms</td>
         <td><?php echo 'here1'; ?></td>                       
       </tr>
       <tr>                       
-        <td>Year</td>
-        <td><?php echo  'here1'; ?></td>
+        <td>Floors</td>
+        <td><?php echo  'yes'; ?></td>
       </tr>       
       <tr>
-        <td>Medium</td>
-        <td><?php echo  'here1'; ?></td>
+        <td>Pool</td>
+        <td><?php echo  'yes'; ?></td>
       </tr>  
       <tr>
-        <td>Dimensions</td>
-        <td><?php echo  'here1'; ?></td>
+        <td>Gym</td>
+        <td><?php echo  'yes'; ?></td>
       </tr>        
     </tbody>
   </table>
