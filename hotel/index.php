@@ -1,3 +1,10 @@
+<?php 
+session_start();
+include 'includes/config.inc.php';
+include 'includes/functions.inc.php';
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -193,7 +200,7 @@
     <div class="ui text container">
       <h3 class="ui header">Book your reservation today</h3>
       <p>Are you ready to set your dream vacation today? Then click on the button below to get started.</p>
-      <a href ="reservation.php" class="ui large button">Read More</a>
+      <a href ="reservation.php?hotel_id=1" class="ui large button">Read More</a>
       <h4 class="ui horizontal header divider">
         <a href="#">Contact</a>
       </h4>

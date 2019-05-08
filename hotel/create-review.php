@@ -12,7 +12,11 @@
     $reviewDB = new ReviewDB($pdo);
 
     //echo $_GET['id']."<br>".$_SESSION['customer_id']."<br>".$rooms['hotelID']."<br>".$_GET['ratings']."<br>".$_GET['comment']
-    $reviewDB->insertReview($_GET['id'],$_SESSION['customer_id'],$rooms['hotelID'],$_GET['ratings'],$_GET['comment']);
+    try {
+        $reviewDB->insertReview($_GET['id'],$_SESSION['customer_id'],$rooms['hotelID'],$_GET['ratings'],$_GET['comment']);
 
-    header('location: view-reservations.php');
+        header('location: view-reservations.php');
+    } catch (PDOException $e) {
+   die( $e->getMessage() );
+}
 ?>

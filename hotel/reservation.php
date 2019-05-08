@@ -3,6 +3,9 @@
 session_start();
 include 'includes/config.inc.php';
 include 'includes/functions.inc.php';
+if (! isset($_SESSION['email']) ) {
+  header('Location: login.php');
+} 
 /*
 foreach ($_SESSION as $key => $value){
     echo "{$key} => {$value} ";

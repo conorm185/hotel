@@ -3,6 +3,10 @@
 session_start();
 include 'includes/config.inc.php';
 include 'includes/functions.inc.php';
+
+if (! isset($_SESSION['email']) ) {
+  header('Location: login.php');
+} 
 /*
 foreach ($_SESSION as $key => $value){
     echo "{$key} => {$value} ";
@@ -120,7 +124,7 @@ catch (PDOException $e) {
           });
 
           marker.addListener('click', function() {
-            window.location.href = "/hotel/hotel/single-hotel.php?hotel_id="+(index+1);
+            window.location.href = "single-hotel.php?hotel_id="+(index+1);
             infowindow.open(marker.get('map'), marker);
           });
         } 
