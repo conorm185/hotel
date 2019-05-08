@@ -17,16 +17,12 @@
                     <i class="dropdown icon"></i>
                   <div class="menu">
                     <a class="item" href="profile.php"><i class="edit icon"></i> Edit Profile</a>
-                    <a class="item" href="login.php"><i class="globe icon"></i> Choose Language</a>
                     <a class="item" href="settings.php"><i class="settings icon"></i> Account Settings</a>
                     <a class="item" href="logout.php"><i class="sign out icon"></i> Logout</a>
                   </div>
                 </div>
                 <a class=" item" href="view-reservations.php">
                   <i class="archive icon"></i> Reservation History
-                </a>        
-                <a class=" item">
-                  <i class="shop icon"></i> Cart
                 </a>
                 
                 <?php }else{?>

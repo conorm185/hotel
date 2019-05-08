@@ -78,7 +78,7 @@ if(!isset($_SESSION['email']) ){
                     <h3 ><?php echo $hotels['address'].', '.$hotels['city'].', '.$hotels['state'].' '.$hotels['zip']; ?></h3>
                       <div class="meta">
                         <p><?php echo generateRatingStars($hotels['rating']); ?></p>
-                        <p><?php echo  'description here'; ?></p>
+                        <p><?php echo  ''; ?></p>
                         <a class="ui right labeled icon button green" href="reservation.php?hotel_id=<?php echo $_GET['hotel_id']; ?>">
                           <i class="cart icon"></i>
                           Make a Reservation
