@@ -258,13 +258,13 @@ DELIMITER //
 CREATE PROCEDURE generateReservations()   
 BEGIN
 DECLARE i INT DEFAULT 1; 
-DECLARE randomDay date DEFAULT "2009-04-19";
+DECLARE randomDay date DEFAULT "2009-01-01";
 DECLARE randomLength int DEFAULT 1;
-DECLARE endDay date DEFAULT "2009-04-19";
+DECLARE endDay date DEFAULT "2009-01-02";
 DECLARE randomRoomID int DEFAULT 1;
 DECLARE randomCustomerID int DEFAULT 1;
-WHILE (i <= 40000) DO
-	set @randomDay = DATE_ADD("2009-04-19", INTERVAL FLOOR(RAND()*(3740-1+1)+1) DAY);
+WHILE (i <= 200000) DO
+	set @randomDay = DATE_ADD("2009-01-01", INTERVAL FLOOR(RAND()*(3740-1+1)+1) DAY);
 	set @randomLength = FLOOR(RAND()*(14-1+1)+1);
 	set @endDay = DATE_ADD(@randomDay, INTERVAL @randomLength DAY);
 	set @randomRoomID = FLOOR(RAND()*(4883-1+1)+1);

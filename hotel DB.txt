@@ -128,27 +128,102 @@ create a bunch of existing reservations
 
 
 
-Sum of all reservations at a given location
-
-SELECT SUM(length) FROM `reservations`,rooms WHERE reservations.roomID=rooms.roomID AND rooms.hotelID=1
+Sum of all reservation days at a given location
+SELECT SUM(length) 
+FROM `reservations`,rooms 
+WHERE reservations.roomID=rooms.roomID AND rooms.hotelID=1
 
 number of rooms at a given location
-SELECT count(roomID) FROM `rooms` WHERE rooms.hotelID=1
+SELECT count(roomID) 
+FROM `rooms` 
+WHERE rooms.hotelID=1
+
+number of days since 2009
+SELECT DATEDIFF(CURDATE(), "2009-01-01");
+
+total number of roomdays at a given location
+SELECT ((SELECT DATEDIFF(CURDATE(), "2009-01-01"))*(SELECT count(roomID) 
+FROM `rooms` 
+WHERE rooms.hotelID=1))
+
+room occupancy rate at a given location
+(SELECT ((100*(SELECT SUM(length) 
+		FROM `reservations`,rooms 
+		WHERE reservations.roomID=rooms.roomID AND rooms.hotelID=1)/
+			((SELECT DATEDIFF(CURDATE(), "2009-01-01"))
+		*
+		(SELECT count(roomID) 
+		FROM `rooms` 
+		WHERE rooms.hotelID=1)))) AS rate)
 
 
 
+1. find all rooms available at a given location that don't conflict with  existing reservations
+implemented in RoomsDB.class.php
+
+SELECT * 
+FROM rooms 
+INNER JOIN roomType ON roomType.typeID=Rooms.typeID  
+WHERE hotelID=?
+AND Rooms.typeID=?
+AND roomID NOT IN(SELECT roomID 
+			FROM reservations 
+			WHERE startDate BETWEEN $checkin AND $checkout 
+				OR $checkin BETWEEN startDate AND endDate )
 
 
+2. find the occupancy_rate of all hotels
+
+SELECT *,(SELECT ((100*(SELECT SUM(length) 
+		FROM `reservations`,rooms 
+		WHERE reservations.roomID=rooms.roomID AND rooms.hotelID=1)/
+			((SELECT DATEDIFF(CURDATE(), "2009-01-01"))
+		*
+		(SELECT count(roomID) 
+		FROM `rooms` 
+		WHERE rooms.hotelID=hotels.HotelID)))))AS occupancy_rate
+FROM `hotels`
 
 
+BONUS PROCEDURE: generates 200k reservations
 
-
-
-
-
-
-
-
+drop procedure if exists generateReservations
+DELIMITER //  
+CREATE PROCEDURE generateReservations()   
+BEGIN
+DECLARE i INT DEFAULT 1; 
+DECLARE randomDay date DEFAULT "2009-01-01";
+DECLARE randomLength int DEFAULT 1;
+DECLARE endDay date DEFAULT "2009-01-02";
+DECLARE randomRoomID int DEFAULT 1;
+DECLARE randomCustomerID int DEFAULT 1;
+WHILE (i <= 200000) DO
+	set @randomDay = DATE_ADD("2009-01-01", INTERVAL FLOOR(RAND()*(3740-1+1)+1) DAY);
+	set @randomLength = FLOOR(RAND()*(14-1+1)+1);
+	set @endDay = DATE_ADD(@randomDay, INTERVAL @randomLength DAY);
+	set @randomRoomID = FLOOR(RAND()*(4883-1+1)+1);
+    set @randomCustomerID = FLOOR(RAND()*(5000-1+1)+1);
+    
+    IF (@randomCustomerID > 51)
+    THEN
+    	set @randomCustomerID = 1;
+    END IF;
+    
+    IF  (EXISTS(SELECT * FROM (    	SELECT *
+    					FROM reservations
+					    WHERE roomID = @randomRoomID) AS t
+                WHERE  t.startDate BETWEEN @randomDay AND @endDay OR
+		@randomDay BETWEEN t.startDate AND t.endDate)) THEN
+	  set @randomRoomID = FLOOR(RAND()*(4883-1+1)+1);
+	ELSE
+	  INSERT INTO `reservations`(`roomID`, `customerID`,`startDate`, `endDate`, `length`)
+	 		VALUES (@randomRoomID,@randomCustomerID,@randomDay,@endDay,@randomLength);
+	END IF;          
+    SET i = i+1;
+END WHILE;
+END;
+//
+CALL generateReservations();
 
 
 
