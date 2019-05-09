@@ -121,3 +121,42 @@ create 20 rooms for each hotel
 create a bunch of existing reservations
 
 
+////////////////////////////////////////interesting queries////////////////////////////////////////
+
+
+
+
+
+
+Sum of all reservations at a given location
+
+SELECT SUM(length) FROM `reservations`,rooms WHERE reservations.roomID=rooms.roomID AND rooms.hotelID=1
+
+number of rooms at a given location
+SELECT count(roomID) FROM `rooms` WHERE rooms.hotelID=1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
